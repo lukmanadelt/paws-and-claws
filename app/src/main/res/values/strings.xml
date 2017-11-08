@@ -3,4 +3,19 @@
     <string name="username">Nama Pengguna</string>
     <string name="password">Kata Sandi</string>
     <string name="login">Masuk</string>
+    <string name="doctor">Dokter</string>
+    <string name="customer">Pelanggan</string>
+    <string name="report">Laporan</string>
+    <string name="greeting_fullname">Hai,</string>
+    <string name="greeting_role">Anda masuk sebagai</string>
+    <string name="logout">Keluar</string>
+    <string name="message_logout">Apakah anda yakin untuk keluar ?</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+    <string name="doctor_list">Daftar Dokter</string>
+    <string name="fullname">Nama Lengkap</string>
+    <string name="status">Status</string>
+    <string name="active">Aktif</string>
+    <string name="not_active">Tidak Aktif</string>
+    <string name="update">Perbarui</string>
 </resources>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="mobile.skripsi.pawsandclaws.activities.AdministratorActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:src="@drawable/logo_original" />
+
+        <TextView
+            android:id="@+id/tvFullname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivLogo"
+            android:layout_centerHorizontal="true"
+            android:text="@string/greeting_fullname"
+            android:textColor="@color/colorGray"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/tvRole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvFullname"
+            android:layout_centerHorizontal="true"
+            android:text="@string/greeting_role"
+            android:textColor="@color/colorGray"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/bDoctor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvRole"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/image_button"
+            android:drawableLeft="@drawable/doctor"
+            android:paddingBottom="5dp"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
+            android:paddingTop="5dp"
+            android:text="@string/doctor"
+            android:textColor="@color/colorWhite" />
+
+        <Button
+            android:id="@+id/bCustomer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bDoctor"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/image_button"
+            android:drawableLeft="@drawable/customer"
+            android:paddingBottom="5dp"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
+            android:paddingTop="5dp"
+            android:text="@string/customer"
+            android:textColor="@color/colorWhite" />
+
+        <Button
+            android:id="@+id/bReport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bCustomer"
+            android:background="@drawable/image_button"
+            android:drawableLeft="@drawable/report"
+            android:paddingBottom="5dp"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
+            android:paddingTop="5dp"
+            android:text="@string/report"
+            android:textColor="@color/colorWhite" />
+    </RelativeLayout>
+
+</ScrollView>

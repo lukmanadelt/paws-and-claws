@@ -17,14 +17,17 @@ public class Result {
     @SerializedName("user")
     private User user;
 
+    @SerializedName("doctor")
+    private User doctor;
+
     public Result(Boolean success, String message, User user) {
         this.success = success;
         this.message = message;
         this.user = user;
     }
 
-    public Result(User user) {
-        this.user = user;
+    public Result(User doctor) {
+        this.doctor = doctor;
     }
 
     public Boolean getSuccess() {
@@ -36,4 +39,6 @@ public class Result {
     }
 
     public User getUser() { return user; }
+
+    public User getDoctor() { return doctor; }
 }

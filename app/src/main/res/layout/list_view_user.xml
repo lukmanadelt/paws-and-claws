@@ -8,11 +8,10 @@
         android:id="@+id/tvFullname"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@drawable/image_button_green"
         android:gravity="center"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorGray"
         android:textSize="16dp" />
 
 </RelativeLayout>

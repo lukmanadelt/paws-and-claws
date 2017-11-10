@@ -11,15 +11,27 @@ import java.util.ArrayList;
  */
 
 public class Users {
-    @SerializedName("users")
+    @SerializedName("doctors")
     @Expose
-    private ArrayList<User> users = new ArrayList<>();
+    private ArrayList<User> doctors = new ArrayList<>();
 
-    public ArrayList<User> getUsers() {
-        return users;
+    public ArrayList<User> getDoctors() {
+        return doctors;
     }
 
-    public void setUsers(ArrayList<User> users) {
-        this.users = users;
+    public void setDoctors(ArrayList<User> doctors) {
+        this.doctors = doctors;
+    }
+
+    @SerializedName("customers")
+    @Expose
+    private ArrayList<User> customers = new ArrayList<>();
+
+    public ArrayList<User> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(ArrayList<User> customers) {
+        this.customers = customers;
     }
 }

@@ -58,10 +58,10 @@ public class AdministratorActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bDoctor:
-                Intent nextActivity = new Intent(getApplicationContext(), DoctorActivity.class);
-                startActivity(nextActivity);
+                startActivity(new Intent(this, DoctorActivity.class));
                 break;
             case R.id.bCustomer:
+                startActivity(new Intent(this, CustomerActivity.class));
                 break;
             case R.id.bReport:
                 break;

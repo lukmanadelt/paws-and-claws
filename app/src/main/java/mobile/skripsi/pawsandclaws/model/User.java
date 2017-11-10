@@ -44,17 +44,13 @@ public class User {
         this.password = password;
         this.fullname = fullname;
         this.phone = phone;
+        this.status = status;
     }
 
     public User(int id, int role_id, String username, String fullname) {
         this.id = id;
         this.role_id = role_id;
         this.username = username;
-        this.fullname = fullname;
-    }
-
-    public User(int id, String fullname) {
-        this.id = id;
         this.fullname = fullname;
     }
 
@@ -75,4 +71,6 @@ public class User {
     }
 
     public String getFullname() { return fullname; }
+
+    public int getStatus() { return status; }
 }

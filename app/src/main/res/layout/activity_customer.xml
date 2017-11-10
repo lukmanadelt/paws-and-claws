@@ -12,7 +12,7 @@
     tools:context="mobile.skripsi.pawsandclaws.activities.DoctorActivity">
 
     <ListView
-        android:id="@+id/lvDoctor"
+        android:id="@+id/lvCustomer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

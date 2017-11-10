@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.LoginActivity"
+        <activity
+            android:name=".activities.LoginActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,8 +18,21 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.AdministratorActivity" />
-        <activity android:name=".activities.DoctorActivity"
-            android:label="@string/doctor_list"/>
+        <activity
+            android:name=".activities.DoctorActivity"
+            android:label="@string/doctor_list" />
+        <activity
+            android:name=".activities.DoctorUpdateActivity"
+            android:label="@string/doctor_update" />
+        <activity
+            android:name=".activities.DoctorInsertActivity"
+            android:label="@string/doctor_insert" />
+        <activity
+            android:name=".activities.CustomerActivity"
+            android:label="@string/customer_list" />
+        <activity
+            android:name=".activities.CustomerInsertActivity"
+            android:label="@string/customer_insert" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

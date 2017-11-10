@@ -2,17 +2,17 @@ package mobile.skripsi.pawsandclaws.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
 import mobile.skripsi.pawsandclaws.R;
 import mobile.skripsi.pawsandclaws.api.APIService;
 import mobile.skripsi.pawsandclaws.api.APIUrl;
-import mobile.skripsi.pawsandclaws.helper.SharedPreferencesManager;
 import mobile.skripsi.pawsandclaws.model.Result;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,48 +21,42 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Login Activity
- * Created by @lukmanadelt on 05/11/2017.
+ * Insert Customer Activity
+ * Created by @lukmanadelt on 11/10/2017.
  */
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class CustomerInsertActivity extends AppCompatActivity implements View.OnClickListener {
     private View parentView;
-    private EditText etUsername, etPassword;
-    private Button bLogin;
-    private String username, password;
+    private EditText etUsername, etPassword, etFullname, etPhone, etAddress;
+    private Button bInsert;
+    private String username, password, fullname, phone, address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Set Splash Screen
-        setTheme(R.style.AppTheme);
-
         // Create Layout
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        // If user is already logged in open the activity based on user role
-        if (SharedPreferencesManager.getInstance(this).isLoggedIn()) {
-            finish();
-            redirectActivity(SharedPreferencesManager.getInstance(getApplicationContext()).getUser().getRoleId());
-        }
+        setContentView(R.layout.activity_customer_insert);
 
         // Initial Component
         parentView = findViewById(R.id.parentLayout);
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
-        bLogin = findViewById(R.id.bLogin);
+        etFullname = findViewById(R.id.etFullname);
+        etPhone = findViewById(R.id.etPhone);
+        etAddress = findViewById(R.id.etAddress);
+        bInsert = findViewById(R.id.bInsert);
 
         // Set component to listen click event
-        bLogin.setOnClickListener(this);
+        bInsert.setOnClickListener(this);
     }
 
     /**
-     * Method to verify login in database
+     * Method to inserting a customer
      */
-    private void userLogin() {
+    private void insertCustomer() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
-        progressDialog.setMessage("Masuk...");
+        progressDialog.setMessage("Masukkan...");
         progressDialog.show();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -72,7 +66,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         APIService service = retrofit.create(APIService.class);
 
-        Call<Result> call = service.userLogin(username, password);
+        Call<Result> call = service.insertCustomer(username, password, fullname, phone, address);
 
         call.enqueue(new Callback<Result>() {
             @Override
@@ -80,8 +74,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 progressDialog.dismiss();
 
                 if (response.body().getSuccess()) {
-                    SharedPreferencesManager.getInstance(getApplicationContext()).login(response.body().getUser());
-                    redirectActivity(response.body().getUser().getRoleId());
+                    onBackPressed();
                     finish();
                 }
 
@@ -96,37 +89,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    /**
-     * Method to redirect to another activity based on user role
-     */
-    private void redirectActivity(int role_id) {
-        switch (role_id) {
-            case 1:
-                // Role as Administrator
-                startActivity(new Intent(this, AdministratorActivity.class));
-                break;
-            case 2:
-                // Role as Customer
-//                Intent intent = new Intent(LoginActivity.this, CustomerActivity.class);
-                break;
-            case 3:
-                // Role as Doctor
-//                Intent intent = new Intent(LoginActivity.this, DoctorActivity.class);
-                break;
+    @Override
+    public void onClick(View v) {
+        if (v == bInsert) {
+            username = etUsername.getText().toString().trim();
+            password = etPassword.getText().toString().trim();
+            fullname = etFullname.getText().toString().trim();
+            phone = etPhone.getText().toString().trim();
+            address = etAddress.getText().toString().trim();
+
+            if (username.isEmpty()) {
+                Snackbar.make(parentView, R.string.empty_username, Snackbar.LENGTH_SHORT).show();
+            } else if (password.isEmpty()) {
+                Snackbar.make(parentView, R.string.empty_password, Snackbar.LENGTH_SHORT).show();
+            }else if (fullname.isEmpty()) {
+                Snackbar.make(parentView, R.string.empty_fullname, Snackbar.LENGTH_SHORT).show();
+            } else if (phone.isEmpty()) {
+                Snackbar.make(parentView, R.string.empty_phone, Snackbar.LENGTH_SHORT).show();
+            } else if (address.isEmpty()) {
+                Snackbar.make(parentView, R.string.empty_address, Snackbar.LENGTH_SHORT).show();
+            } else {
+                insertCustomer();
+            }
         }
     }
 
     @Override
-    public void onClick(View v) {
-        if (v == bLogin) {
-            username = etUsername.getText().toString().trim();
-            password = etPassword.getText().toString().trim();
-
-            if (username.isEmpty() || password.isEmpty()) {
-                Snackbar.make(parentView, R.string.empty_username_password, Snackbar.LENGTH_SHORT).show();
-            } else {
-                userLogin();
-            }
-        }
+    public void onBackPressed() {
+        startActivity(new Intent(this, CustomerActivity.class));
+        finish();
     }
 }

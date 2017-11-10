@@ -17,8 +17,8 @@ import mobile.skripsi.pawsandclaws.R;
 import mobile.skripsi.pawsandclaws.api.APIService;
 import mobile.skripsi.pawsandclaws.api.APIUrl;
 import mobile.skripsi.pawsandclaws.helper.UserAdapter;
-import mobile.skripsi.pawsandclaws.model.Users;
 import mobile.skripsi.pawsandclaws.model.User;
+import mobile.skripsi.pawsandclaws.model.Users;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,59 +27,59 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Doctor Activity
- * Created by @lukmanadelt on 11/7/2017.
+ * Created by @lukmanadelt on 11/10/2017.
  */
 
-public class DoctorActivity extends AppCompatActivity implements View.OnClickListener {
+public class CustomerActivity extends AppCompatActivity implements View.OnClickListener {
     private View parentView;
-    private ListView lvDoctor;
+    private ListView lvCustomer;
     private TextView tvEmpty;
     private FloatingActionButton fabInsert;
-    private ArrayList<User> doctors;
+    private ArrayList<User> customers;
     private UserAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Create Layout
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor);
+        setContentView(R.layout.activity_customer);
 
         // Initial Component
         parentView = findViewById(R.id.parentLayout);
-        lvDoctor = findViewById(R.id.lvDoctor);
+        lvCustomer = findViewById(R.id.lvCustomer);
         tvEmpty = findViewById(R.id.tvEmpty);
         fabInsert = findViewById(R.id.fabInsert);
 
         // Array List for binding data from JSON to this list
-        doctors = new ArrayList<>();
+        customers = new ArrayList<>();
 
         // Set component to listen click event
         fabInsert.setOnClickListener(this);
 
-        lvDoctor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvCustomer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent updateDoctor = new Intent(getApplicationContext(), DoctorUpdateActivity.class);
-
-                updateDoctor.putExtra("doctor_id", doctors.get(position).getId());
-                startActivity(updateDoctor);
-                finish();
+//                Intent updateCustomer = new Intent(getApplicationContext(), CustomerUpdateActivity.class);
+//
+//                updateCustomer.putExtra("customer_id", customers.get(position).getId());
+//                startActivity(updateCustomer);
+//                finish();
             }
         });
 
         // Getting all doctors
-        getDoctors();
+        getCustomers();
     }
 
     @Override
     public void onClick(View v) {
         if (v == fabInsert) {
-            startActivity(new Intent(this, DoctorInsertActivity.class));
+            startActivity(new Intent(this, CustomerInsertActivity.class));
             finish();
         }
     }
 
-    private void getDoctors() {
+    private void getCustomers() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Memuat...");
@@ -92,31 +92,31 @@ public class DoctorActivity extends AppCompatActivity implements View.OnClickLis
 
         APIService service = retrofit.create(APIService.class);
 
-        Call<Users> call = service.getDoctors();
+        Call<Users> call = service.getCustomers();
 
         call.enqueue(new Callback<Users>() {
             @Override
             public void onResponse(Call<Users> call, Response<Users> response) {
                 progressDialog.dismiss();
 
-                doctors = response.body().getDoctors();
+                customers = response.body().getCustomers();
 
-                if (doctors.size() == 0) {
-                    lvDoctor.setVisibility(View.GONE);
+                if (customers.size() == 0) {
+                    lvCustomer.setVisibility(View.GONE);
                     tvEmpty.setVisibility(View.VISIBLE);
                 } else {
-                    lvDoctor.setVisibility(View.VISIBLE);
+                    lvCustomer.setVisibility(View.VISIBLE);
                     tvEmpty.setVisibility(View.GONE);
 
-                    adapter = new UserAdapter(DoctorActivity.this, doctors);
-                    lvDoctor.setAdapter(adapter);
+                    adapter = new UserAdapter(CustomerActivity.this, customers);
+                    lvCustomer.setAdapter(adapter);
                 }
             }
 
             @Override
             public void onFailure(Call<Users> call, Throwable t) {
                 progressDialog.dismiss();
-                lvDoctor.setVisibility(View.GONE);
+                lvCustomer.setVisibility(View.GONE);
                 tvEmpty.setVisibility(View.VISIBLE);
                 Snackbar.make(parentView, t.getMessage(), Snackbar.LENGTH_SHORT).show();
             }

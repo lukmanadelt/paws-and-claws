@@ -18,4 +18,19 @@
     <string name="active">Aktif</string>
     <string name="not_active">Tidak Aktif</string>
     <string name="update">Perbarui</string>
+    <string name="empty">Data tidak tersedia</string>
+    <string name="doctor_update">Perbarui Dokter</string>
+    <string name="empty_username">Nama Pengguna wajib diisi</string>
+    <string name="empty_fullname">Nama Lengkap wajib diisi</string>
+    <string name="empty_status">Status wajib dipilih salah satu</string>
+    <string name="empty_username_password">Nama Pengguna dan Kata Sandi wajib diisi</string>
+    <string name="insert">Tambah</string>
+    <string name="doctor_insert">Tambah Dokter</string>
+    <string name="empty_password">Kata Sandi wajib diisi</string>
+    <string name="customer_list">Daftar Pelanggan</string>
+    <string name="phone">Kontak</string>
+    <string name="address">Alamat</string>
+    <string name="empty_phone">Kontak wajib diisi</string>
+    <string name="empty_address">Alamat wajib diisi</string>
+    <string name="customer_insert">Tambah Pelanggan</string>
 </resources>

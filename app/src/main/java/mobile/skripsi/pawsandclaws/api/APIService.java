@@ -58,4 +58,18 @@ public interface APIService {
             @Field("phone") String phone,
             @Field("address") String address
     );
+
+    @GET("customers/{id}")
+    Call<Result> getCustomer(@Path("id") int id);
+
+    @FormUrlEncoded
+    @POST("customers/update/{id}")
+    Call<Result> updateCustomer(
+            @Path("id") int id,
+            @Field("username") String username,
+            @Field("fullname") String fullname,
+            @Field("phone") String phone,
+            @Field("address") String address,
+            @Field("status") int status
+    );
 }

@@ -64,6 +64,7 @@ public class AdministratorActivity extends AppCompatActivity implements View.OnC
                 startActivity(new Intent(this, CustomerActivity.class));
                 break;
             case R.id.bReport:
+                startActivity(new Intent(this, ReportActivity.class));
                 break;
         }
     }
@@ -95,6 +96,9 @@ public class AdministratorActivity extends AppCompatActivity implements View.OnC
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
                 return true;
+            case R.id.profile:
+//                startActivity(new Intent(this, ProfileActivity.class));
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }

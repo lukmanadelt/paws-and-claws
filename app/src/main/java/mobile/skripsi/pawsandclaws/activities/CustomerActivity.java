@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -59,15 +62,15 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
         lvCustomer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent updateCustomer = new Intent(getApplicationContext(), CustomerUpdateActivity.class);
-//
-//                updateCustomer.putExtra("customer_id", customers.get(position).getId());
-//                startActivity(updateCustomer);
-//                finish();
+                Intent detailCustomer = new Intent(getApplicationContext(), CustomerDetailActivity.class);
+
+                detailCustomer.putExtra("customer_id", customers.get(position).getId());
+                startActivity(detailCustomer);
+                finish();
             }
         });
 
-        // Getting all doctors
+        // Getting all customers
         getCustomers();
     }
 

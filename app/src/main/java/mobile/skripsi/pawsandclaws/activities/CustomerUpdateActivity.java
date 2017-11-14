@@ -21,28 +21,30 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Update Doctor Activity
- * Created by @lukmanadelt on 11/9/2017.
+ * Update Customer Activity
+ * Created by @lukmanadelt on 11/12/2017.
  */
 
-public class DoctorUpdateActivity extends AppCompatActivity implements View.OnClickListener {
+public class CustomerUpdateActivity extends AppCompatActivity implements View.OnClickListener {
     private View parentView;
-    private EditText etUsername, etFullname;
+    private EditText etUsername, etFullname, etPhone, etAddress;
     private RadioButton rbActive, rbNotActive;
     private Button bUpdate;
     private int id, status;
-    private String username, fullname;
+    private String username, fullname, phone, address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Create Layout
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_update);
+        setContentView(R.layout.activity_customer_update);
 
         // Initial Component
         parentView = findViewById(R.id.parentLayout);
         etUsername = findViewById(R.id.etUsername);
         etFullname = findViewById(R.id.etFullname);
+        etPhone = findViewById(R.id.etPhone);
+        etAddress = findViewById(R.id.etAddress);
         rbActive = findViewById(R.id.rbActive);
         rbNotActive = findViewById(R.id.rbNotActive);
         bUpdate = findViewById(R.id.bUpdate);
@@ -51,16 +53,16 @@ public class DoctorUpdateActivity extends AppCompatActivity implements View.OnCl
         bUpdate.setOnClickListener(this);
 
         // Initial doctor id from previous activity
-        id = getIntent().getIntExtra("doctor_id", 0);
+        id = getIntent().getIntExtra("customer_id", 0);
 
-        // Getting a doctor
-        getDoctor(id);
+        // Getting a customer
+        getCustomer(id);
     }
 
     /**
-     * Method to getting a doctor
+     * Method to getting a customer
      */
-    private void getDoctor(int id) {
+    private void getCustomer(int id) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Memuat...");
@@ -73,17 +75,19 @@ public class DoctorUpdateActivity extends AppCompatActivity implements View.OnCl
 
         APIService service = retrofit.create(APIService.class);
 
-        Call<Result> call = service.getDoctor(id);
+        Call<Result> call = service.getCustomer(id);
 
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
                 progressDialog.dismiss();
 
-                etUsername.setText(response.body().getDoctor().getUsername());
-                etFullname.setText(response.body().getDoctor().getFullname());
+                etUsername.setText(response.body().getCustomer().getUsername());
+                etFullname.setText(response.body().getCustomer().getFullname());
+                etPhone.setText(response.body().getCustomer().getPhone());
+                etAddress.setText(response.body().getCustomer().getAddress());;
 
-                switch (response.body().getDoctor().getStatus()) {
+                switch (response.body().getCustomer().getStatus()) {
                     case 0:
                         rbNotActive.setChecked(true);
                         break;
@@ -102,9 +106,9 @@ public class DoctorUpdateActivity extends AppCompatActivity implements View.OnCl
     }
 
     /**
-     * Method to updating a doctor
+     * Method to updating a customer
      */
-    private void updateDoctor(int id) {
+    private void updateCustomer(int id) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Mengubah...");
@@ -117,7 +121,7 @@ public class DoctorUpdateActivity extends AppCompatActivity implements View.OnCl
 
         APIService service = retrofit.create(APIService.class);
 
-        Call<Result> call = service.updateDoctor(id, username, fullname, status);
+        Call<Result> call = service.updateCustomer(id, username, fullname, phone, address, status);
 
         call.enqueue(new Callback<Result>() {
             @Override
@@ -145,11 +149,17 @@ public class DoctorUpdateActivity extends AppCompatActivity implements View.OnCl
         if (v == bUpdate) {
             username = etUsername.getText().toString().trim();
             fullname = etFullname.getText().toString().trim();
+            phone = etPhone.getText().toString().trim();
+            address = etAddress.getText().toString().trim();
 
             if (username.isEmpty()) {
                 Snackbar.make(parentView, R.string.empty_username, Snackbar.LENGTH_SHORT).show();
             } else if (fullname.isEmpty()) {
                 Snackbar.make(parentView, R.string.empty_fullname, Snackbar.LENGTH_SHORT).show();
+            } else if (phone.isEmpty()) {
+                Snackbar.make(parentView, R.string.empty_phone, Snackbar.LENGTH_SHORT).show();
+            } else if (address.isEmpty()) {
+                Snackbar.make(parentView, R.string.empty_address, Snackbar.LENGTH_SHORT).show();
             } else if (!rbActive.isChecked() && !rbNotActive.isChecked()) {
                 Snackbar.make(parentView, R.string.empty_status, Snackbar.LENGTH_SHORT).show();
             } else {
@@ -159,14 +169,17 @@ public class DoctorUpdateActivity extends AppCompatActivity implements View.OnCl
                     status = 0;
                 }
 
-                updateDoctor(id);
+                updateCustomer(id);
             }
         }
     }
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, DoctorActivity.class));
+        Intent detailCustomer = new Intent(getApplicationContext(), CustomerDetailActivity.class);
+
+        detailCustomer.putExtra("customer_id", id);
+        startActivity(detailCustomer);
         finish();
     }
 }

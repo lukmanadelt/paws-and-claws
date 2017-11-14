@@ -54,7 +54,7 @@ public class DoctorInsertActivity extends AppCompatActivity implements View.OnCl
     private void insertDoctor() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
-        progressDialog.setMessage("Masukkan...");
+        progressDialog.setMessage("Menambah...");
         progressDialog.show();
 
         Retrofit retrofit = new Retrofit.Builder()

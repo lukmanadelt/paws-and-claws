@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="mobile.skripsi.pawsandclaws.activities.ReportActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvReport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/report"
+            android:textColor="@color/colorPrimary" />
+
+        <Spinner
+            android:id="@+id/sReport"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@+id/tvReport"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/tvStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sReport"
+            android:text="@string/start_date"
+            android:textColor="@color/colorPrimary" />
+
+        <EditText
+            android:id="@+id/etStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvStartDate"
+            android:clickable="true"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hint="@string/choose_date" />
+
+        <TextView
+            android:id="@+id/tvEndDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etStartDate"
+            android:text="@string/end_date"
+            android:textColor="@color/colorPrimary" />
+
+        <EditText
+            android:id="@+id/etEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvEndDate"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hint="@string/choose_date" />
+
+        <Button
+            android:id="@+id/bViewReport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etEndDate"
+            android:background="@drawable/image_button_green"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/view_report"
+            android:textColor="@color/colorWhite" />
+    </RelativeLayout>
+</ScrollView>

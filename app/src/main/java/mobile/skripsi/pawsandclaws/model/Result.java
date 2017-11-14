@@ -20,14 +20,13 @@ public class Result {
     @SerializedName("doctor")
     private User doctor;
 
+    @SerializedName("customer")
+    private User customer;
+
     public Result(Boolean success, String message, User user) {
         this.success = success;
         this.message = message;
         this.user = user;
-    }
-
-    public Result(User doctor) {
-        this.doctor = doctor;
     }
 
     public Boolean getSuccess() {
@@ -41,4 +40,6 @@ public class Result {
     public User getUser() { return user; }
 
     public User getDoctor() { return doctor; }
+
+    public User getCustomer() { return customer; }
 }

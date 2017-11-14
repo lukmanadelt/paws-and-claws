@@ -17,9 +17,9 @@
     <string name="status">Status</string>
     <string name="active">Aktif</string>
     <string name="not_active">Tidak Aktif</string>
-    <string name="update">Perbarui</string>
+    <string name="update">Ubah</string>
     <string name="empty">Data tidak tersedia</string>
-    <string name="doctor_update">Perbarui Dokter</string>
+    <string name="doctor_update">Ubah Dokter</string>
     <string name="empty_username">Nama Pengguna wajib diisi</string>
     <string name="empty_fullname">Nama Lengkap wajib diisi</string>
     <string name="empty_status">Status wajib dipilih salah satu</string>
@@ -33,4 +33,18 @@
     <string name="empty_phone">Kontak wajib diisi</string>
     <string name="empty_address">Alamat wajib diisi</string>
     <string name="customer_insert">Tambah Pelanggan</string>
+    <string name="menus">Menu</string>
+    <string-array name="context_menu">
+        <item>Ubah</item>
+        <item>Hapus</item>
+    </string-array>
+    <string name="colon">:</string>
+    <string name="delete">Hapus</string>
+    <string name="customer_detail">Rincian Pelanggan</string>
+    <string name="customer_update">Ubah Pelanggan</string>
+    <string name="start_date">Tanggal Mulai</string>
+    <string name="end_date">Tanggal Akhir</string>
+    <string name="view_report">Lihat Laporan</string>
+    <string name="choose_date">Pilih Tanggal</string>
+    <string name="profile">Profil</string>
 </resources>

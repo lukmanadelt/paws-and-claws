@@ -56,7 +56,7 @@ public class CustomerInsertActivity extends AppCompatActivity implements View.On
     private void insertCustomer() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
-        progressDialog.setMessage("Masukkan...");
+        progressDialog.setMessage("Menambah...");
         progressDialog.show();
 
         Retrofit retrofit = new Retrofit.Builder()

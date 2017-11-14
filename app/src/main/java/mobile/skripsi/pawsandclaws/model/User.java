@@ -31,19 +31,24 @@ public class User {
 
     @SerializedName("phone")
     @Expose
-    private int phone;
+    private String phone;
+
+    @SerializedName("address")
+    @Expose
+    private String address;
 
     @SerializedName("status")
     @Expose
     private int status;
 
-    public User(int id, int role_id, String username, String password, String fullname, int phone, int status) {
+    public User(int id, int role_id, String username, String password, String fullname, String phone, String address, int status) {
         this.id = id;
         this.role_id = role_id;
         this.username = username;
         this.password = password;
         this.fullname = fullname;
         this.phone = phone;
+        this.address = address;
         this.status = status;
     }
 
@@ -71,6 +76,10 @@ public class User {
     }
 
     public String getFullname() { return fullname; }
+
+    public String getPhone() { return phone; }
+
+    public String getAddress() { return address; }
 
     public int getStatus() { return status; }
 }

@@ -33,6 +33,15 @@
         <activity
             android:name=".activities.CustomerInsertActivity"
             android:label="@string/customer_insert" />
+        <activity
+            android:name=".activities.CustomerDetailActivity"
+            android:label="@string/customer_detail" />
+        <activity
+            android:name=".activities.CustomerUpdateActivity"
+            android:label="@string/customer_update" />
+        <activity
+            android:name=".activities.ReportActivity"
+            android:label="@string/report" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

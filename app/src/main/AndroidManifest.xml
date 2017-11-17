@@ -42,6 +42,9 @@
         <activity
             android:name=".activities.ReportActivity"
             android:label="@string/report" />
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:label="@string/profile" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

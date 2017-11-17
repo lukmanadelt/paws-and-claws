@@ -47,4 +47,8 @@
     <string name="view_report">Lihat Laporan</string>
     <string name="choose_date">Pilih Tanggal</string>
     <string name="profile">Profil</string>
+    <string name="password_confirmation">Konfirmasi Password</string>
+    <string name="password_update">Ubah Password</string>
+    <string name="empty_password_confirmation">Konfirmasi Kata Sandi wajib diisi</string>
+    <string name="comparison_password">Konfirmasi Kata Sandi wajib sama dengan Kata Sandi</string>
 </resources>

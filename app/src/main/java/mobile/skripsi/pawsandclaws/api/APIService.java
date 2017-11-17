@@ -72,4 +72,11 @@ public interface APIService {
             @Field("address") String address,
             @Field("status") int status
     );
+
+    @FormUrlEncoded
+    @POST("profiles/update/{id}")
+    Call<Result> updateProfile(
+            @Path("id") int id,
+            @Field("password") String password
+    );
 }

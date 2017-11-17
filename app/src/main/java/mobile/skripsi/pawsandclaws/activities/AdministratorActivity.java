@@ -79,6 +79,13 @@ public class AdministratorActivity extends AppCompatActivity implements View.OnC
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.profile:
+                Intent profile = new Intent(this, ProfileActivity.class);
+
+                profile.putExtra("user_id", SharedPreferencesManager.getInstance(getApplicationContext()).getUser().getId());
+                startActivity(profile);
+                finish();
+                return true;
             case R.id.logout:
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.logout)
@@ -96,9 +103,6 @@ public class AdministratorActivity extends AppCompatActivity implements View.OnC
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
                 return true;
-            case R.id.profile:
-//                startActivity(new Intent(this, ProfileActivity.class));
-                break;
             default:
                 return super.onOptionsItemSelected(item);
         }

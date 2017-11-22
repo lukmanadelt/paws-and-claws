@@ -48,7 +48,7 @@ public class AdministratorActivity extends AppCompatActivity implements View.OnC
         bCustomer.setOnClickListener(this);
         bReport.setOnClickListener(this);
 
-        // Append
+        // Append fullname and role
         String fullname = SharedPreferencesManager.getInstance(getApplicationContext()).getUser().getFullname();
         tvFullname.append(" " + fullname);
         tvRole.append(" Administrator");
@@ -58,10 +58,10 @@ public class AdministratorActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bDoctor:
-                startActivity(new Intent(this, DoctorActivity.class));
+                startActivity(new Intent(this, DoctorListActivity.class));
                 break;
             case R.id.bCustomer:
-                startActivity(new Intent(this, CustomerActivity.class));
+                startActivity(new Intent(this, CustomerListActivity.class));
                 break;
             case R.id.bReport:
                 startActivity(new Intent(this, ReportActivity.class));
@@ -72,7 +72,7 @@ public class AdministratorActivity extends AppCompatActivity implements View.OnC
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.toolbar, menu);
+        inflater.inflate(R.menu.toolbar_administrator, menu);
         return true;
     }
 
@@ -80,10 +80,7 @@ public class AdministratorActivity extends AppCompatActivity implements View.OnC
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.profile:
-                Intent profile = new Intent(this, ProfileActivity.class);
-
-                profile.putExtra("user_id", SharedPreferencesManager.getInstance(getApplicationContext()).getUser().getId());
-                startActivity(profile);
+                startActivity(new Intent(this, ProfileActivity.class));
                 finish();
                 return true;
             case R.id.logout:

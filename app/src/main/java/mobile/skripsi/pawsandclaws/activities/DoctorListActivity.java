@@ -26,11 +26,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Doctor Activity
+ * Doctor List Activity
  * Created by @lukmanadelt on 11/7/2017.
  */
 
-public class DoctorActivity extends AppCompatActivity implements View.OnClickListener {
+public class DoctorListActivity extends AppCompatActivity implements View.OnClickListener {
     private View parentView;
     private ListView lvDoctor;
     private TextView tvEmpty;
@@ -42,7 +42,7 @@ public class DoctorActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         // Create Layout
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor);
+        setContentView(R.layout.activity_doctor_list);
 
         // Initial Component
         parentView = findViewById(R.id.parentLayout);
@@ -108,7 +108,7 @@ public class DoctorActivity extends AppCompatActivity implements View.OnClickLis
                     lvDoctor.setVisibility(View.VISIBLE);
                     tvEmpty.setVisibility(View.GONE);
 
-                    adapter = new UserAdapter(DoctorActivity.this, doctors);
+                    adapter = new UserAdapter(DoctorListActivity.this, doctors);
                     lvDoctor.setAdapter(adapter);
                 }
             }

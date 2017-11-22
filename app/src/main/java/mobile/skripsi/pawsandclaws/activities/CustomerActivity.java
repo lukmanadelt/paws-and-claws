@@ -1,45 +1,29 @@
 package mobile.skripsi.pawsandclaws.activities;
 
-import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import mobile.skripsi.pawsandclaws.R;
-import mobile.skripsi.pawsandclaws.api.APIService;
-import mobile.skripsi.pawsandclaws.api.APIUrl;
-import mobile.skripsi.pawsandclaws.helper.UserAdapter;
-import mobile.skripsi.pawsandclaws.model.User;
-import mobile.skripsi.pawsandclaws.model.Users;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import mobile.skripsi.pawsandclaws.helper.SharedPreferencesManager;
 
 /**
- * Doctor Activity
- * Created by @lukmanadelt on 11/10/2017.
+ * Customer Activity
+ * Created by Sleekr on 11/22/2017.
  */
 
 public class CustomerActivity extends AppCompatActivity implements View.OnClickListener {
-    private View parentView;
-    private ListView lvCustomer;
-    private TextView tvEmpty;
+    private TextView tvFullname, tvRole;
     private FloatingActionButton fabInsert;
-    private ArrayList<User> customers;
-    private UserAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,87 +31,78 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer);
 
-        // Initial Component
-        parentView = findViewById(R.id.parentLayout);
-        lvCustomer = findViewById(R.id.lvCustomer);
-        tvEmpty = findViewById(R.id.tvEmpty);
-        fabInsert = findViewById(R.id.fabInsert);
+        // If user not logged in open the Login Activity
+        if (!SharedPreferencesManager.getInstance(this).isLoggedIn()) {
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
 
-        // Array List for binding data from JSON to this list
-        customers = new ArrayList<>();
+        // Initial Component
+        tvFullname = findViewById(R.id.tvFullname);
+        tvRole = findViewById(R.id.tvRole);
+        fabInsert = findViewById(R.id.fabInsert);
 
         // Set component to listen click event
         fabInsert.setOnClickListener(this);
 
-        lvCustomer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent detailCustomer = new Intent(getApplicationContext(), CustomerDetailActivity.class);
-
-                detailCustomer.putExtra("customer_id", customers.get(position).getId());
-                startActivity(detailCustomer);
-                finish();
-            }
-        });
-
-        // Getting all customers
-        getCustomers();
+        // Append fullname and role
+        String fullname = SharedPreferencesManager.getInstance(getApplicationContext()).getUser().getFullname();
+        tvFullname.append(" " + fullname);
+        tvRole.append(" Pelanggan");
     }
 
     @Override
     public void onClick(View v) {
         if (v == fabInsert) {
-            startActivity(new Intent(this, CustomerInsertActivity.class));
-            finish();
+//            startActivity(new Intent(this, PetInsertActivity.class));
+//            finish();
         }
     }
 
-    private void getCustomers() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("Memuat...");
-        progressDialog.show();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(APIUrl.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        APIService service = retrofit.create(APIService.class);
-
-        Call<Users> call = service.getCustomers();
-
-        call.enqueue(new Callback<Users>() {
-            @Override
-            public void onResponse(Call<Users> call, Response<Users> response) {
-                progressDialog.dismiss();
-
-                customers = response.body().getCustomers();
-
-                if (customers.size() == 0) {
-                    lvCustomer.setVisibility(View.GONE);
-                    tvEmpty.setVisibility(View.VISIBLE);
-                } else {
-                    lvCustomer.setVisibility(View.VISIBLE);
-                    tvEmpty.setVisibility(View.GONE);
-
-                    adapter = new UserAdapter(CustomerActivity.this, customers);
-                    lvCustomer.setAdapter(adapter);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Users> call, Throwable t) {
-                progressDialog.dismiss();
-                lvCustomer.setVisibility(View.GONE);
-                tvEmpty.setVisibility(View.VISIBLE);
-                Snackbar.make(parentView, t.getMessage(), Snackbar.LENGTH_SHORT).show();
-            }
-        });
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_customer_doctor, menu);
+        return true;
     }
 
     @Override
-    public void onBackPressed() {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.notification:
+                return true;
+            case R.id.profile:
+                Intent profile = new Intent(this, ProfileActivity.class);
+
+                profile.putExtra("user_id", SharedPreferencesManager.getInstance(getApplicationContext()).getUser().getId());
+                startActivity(profile);
+                finish();
+                return true;
+            case R.id.logout:
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.logout)
+                        .setMessage(R.string.message_logout)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                logout();
+                            }
+                        })
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void logout() {
+        SharedPreferencesManager.getInstance(this).logout();
         finish();
+        startActivity(new Intent(this, LoginActivity.class));
     }
 }

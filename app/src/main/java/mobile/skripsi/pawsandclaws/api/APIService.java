@@ -77,6 +77,10 @@ public interface APIService {
     @POST("profiles/update/{id}")
     Call<Result> updateProfile(
             @Path("id") int id,
+            @Field("username") String username,
+            @Field("fullname") String fullname,
+            @Field("phone") String phone,
+            @Field("address") String address,
             @Field("password") String password
     );
 }

@@ -19,7 +19,7 @@
         </activity>
         <activity android:name=".activities.AdministratorActivity" />
         <activity
-            android:name=".activities.DoctorActivity"
+            android:name=".activities.DoctorListActivity"
             android:label="@string/doctor_list" />
         <activity
             android:name=".activities.DoctorUpdateActivity"
@@ -28,7 +28,7 @@
             android:name=".activities.DoctorInsertActivity"
             android:label="@string/doctor_insert" />
         <activity
-            android:name=".activities.CustomerActivity"
+            android:name=".activities.CustomerListActivity"
             android:label="@string/customer_list" />
         <activity
             android:name=".activities.CustomerInsertActivity"
@@ -45,6 +45,9 @@
         <activity
             android:name=".activities.ProfileActivity"
             android:label="@string/profile" />
+        <activity
+            android:name=".activities.CustomerActivity"
+            android:label="@string/app_name" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

@@ -7,8 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import mobile.skripsi.pawsandclaws.R;
@@ -122,7 +120,7 @@ public class CustomerDetailActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, CustomerActivity.class));
+        startActivity(new Intent(this, CustomerListActivity.class));
         finish();
     }
 }

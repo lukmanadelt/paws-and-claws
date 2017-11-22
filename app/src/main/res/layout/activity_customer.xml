@@ -9,22 +9,59 @@
     android:orientation="vertical"
     android:padding="16dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="mobile.skripsi.pawsandclaws.activities.DoctorActivity">
+    tools:context="mobile.skripsi.pawsandclaws.activities.CustomerActivity">
 
-    <ListView
-        android:id="@+id/lvCustomer"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:gravity="center">
 
-    <TextView
-        android:id="@+id/tvEmpty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/empty"
-        android:textColor="@color/colorGray"
-        android:textSize="16dp"
-        android:visibility="gone" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:src="@drawable/logo_original" />
+
+            <TextView
+                android:id="@+id/tvFullname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ivLogo"
+                android:layout_centerHorizontal="true"
+                android:text="@string/greeting_fullname"
+                android:textColor="@color/colorGray"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/tvRole"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvFullname"
+                android:layout_centerHorizontal="true"
+                android:text="@string/greeting_role"
+                android:textColor="@color/colorGray"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/tvEmptyPet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvRole"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="100dp"
+                android:gravity="center"
+                android:text="@string/empty_pet"
+                android:textColor="@color/colorGray"
+                android:textSize="16dp" />
+        </RelativeLayout>
+    </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabInsert"
@@ -34,5 +71,4 @@
         android:src="@android:drawable/ic_input_add"
         android:tint="@color/colorWhite"
         app:backgroundTint="@color/colorPrimary" />
-
 </android.support.design.widget.CoordinatorLayout>

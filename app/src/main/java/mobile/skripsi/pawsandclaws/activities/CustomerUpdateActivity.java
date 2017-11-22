@@ -85,7 +85,7 @@ public class CustomerUpdateActivity extends AppCompatActivity implements View.On
                 etUsername.setText(response.body().getCustomer().getUsername());
                 etFullname.setText(response.body().getCustomer().getFullname());
                 etPhone.setText(response.body().getCustomer().getPhone());
-                etAddress.setText(response.body().getCustomer().getAddress());;
+                etAddress.setText(response.body().getCustomer().getAddress());
 
                 switch (response.body().getCustomer().getStatus()) {
                     case 0:

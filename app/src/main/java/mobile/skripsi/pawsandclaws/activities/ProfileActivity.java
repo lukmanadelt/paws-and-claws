@@ -8,11 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
+import android.widget.TextView;
 
 import mobile.skripsi.pawsandclaws.R;
 import mobile.skripsi.pawsandclaws.api.APIService;
 import mobile.skripsi.pawsandclaws.api.APIUrl;
+import mobile.skripsi.pawsandclaws.helper.SharedPreferencesManager;
 import mobile.skripsi.pawsandclaws.model.Result;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,10 +28,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
     private View parentView;
-    private EditText etPassword, etPasswordConfirmation;
-    private Button bUpdatePassword;
-    private int id;
-    private String password, password_confirmation;
+    private TextView tvUsername, tvFullname, tvPhone, tvAddress;
+    private EditText etUsername, etFullname, etPhone, etAddress, etPassword, etPasswordConfirmation;
+    private Button bUpdate;
+    private int id, role_id;
+    private String username, fullname, phone, address, password, password_confirmation;
+    private Call<Result> call;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +43,92 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         // Initial Component
         parentView = findViewById(R.id.parentLayout);
+        tvUsername = findViewById(R.id.tvUsername);
+        tvFullname = findViewById(R.id.tvFullname);
+        tvPhone = findViewById(R.id.tvPhone);
+        tvAddress = findViewById(R.id.tvAddress);
+        etUsername = findViewById(R.id.etUsername);
+        etFullname = findViewById(R.id.etFullname);
+        etPhone = findViewById(R.id.etPhone);
+        etAddress = findViewById(R.id.etAddress);
         etPassword = findViewById(R.id.etPassword);
         etPasswordConfirmation = findViewById(R.id.etPasswordConfirmation);
-        bUpdatePassword = findViewById(R.id.bUpdatePassword);
+        bUpdate = findViewById(R.id.bUpdate);
 
         // Set component to listen click event
-        bUpdatePassword.setOnClickListener(this);
+        bUpdate.setOnClickListener(this);
 
-        // Initial user id from previous activity
-        id = getIntent().getIntExtra("user_id", 0);
+        // Initial user id and role id
+        id = SharedPreferencesManager.getInstance(getApplicationContext()).getUser().getId();
+        role_id = SharedPreferencesManager.getInstance(getApplicationContext()).getUser().getRoleId();
+
+        switch (role_id) {
+            case 2:
+                tvUsername.setVisibility(View.VISIBLE);
+                tvFullname.setVisibility(View.VISIBLE);
+                tvPhone.setVisibility(View.VISIBLE);
+                tvAddress.setVisibility(View.VISIBLE);
+                etUsername.setVisibility(View.VISIBLE);
+                etFullname.setVisibility(View.VISIBLE);
+                etPhone.setVisibility(View.VISIBLE);
+                etAddress.setVisibility(View.VISIBLE);
+                break;
+            case 3:
+                break;
+        }
+
+        // Getting a user
+        if ((role_id == 2) || role_id == 3) getUser(id);
+    }
+
+    /**
+     * Method to getting a user
+     */
+    private void getUser(int id) {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Memuat...");
+        progressDialog.show();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(APIUrl.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        APIService service = retrofit.create(APIService.class);
+
+        switch (role_id) {
+            case 2:
+                call = service.getCustomer(id);
+                break;
+            case 3:
+                call = service.getDoctor(id);
+                break;
+        }
+
+        call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                progressDialog.dismiss();
+
+                switch (role_id) {
+                    case 2:
+                        etUsername.setText(response.body().getCustomer().getUsername());
+                        etFullname.setText(response.body().getCustomer().getFullname());
+                        etPhone.setText(response.body().getCustomer().getPhone());
+                        etAddress.setText(response.body().getCustomer().getAddress());
+                        break;
+                    case 3:
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                progressDialog.dismiss();
+                Snackbar.make(parentView, t.getMessage(), Snackbar.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -67,7 +147,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         APIService service = retrofit.create(APIService.class);
 
-        Call<Result> call = service.updateProfile(id, password_confirmation);
+        Call<Result> call = service.updateProfile(id, username, fullname, phone, address, password_confirmation);
 
         call.enqueue(new Callback<Result>() {
             @Override
@@ -92,9 +172,25 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        if (v == bUpdatePassword) {
+        if (v == bUpdate) {
+            username = etUsername.getText().toString().trim();
+            fullname = etFullname.getText().toString().trim();
+            phone = etPhone.getText().toString().trim();
+            address = etAddress.getText().toString().trim();
             password = etPassword.getText().toString().trim();
             password_confirmation = etPasswordConfirmation.getText().toString().trim();
+
+            if (role_id == 2) {
+                if (username.isEmpty()) {
+                    Snackbar.make(parentView, R.string.empty_username, Snackbar.LENGTH_SHORT).show();
+                } else if (fullname.isEmpty()) {
+                    Snackbar.make(parentView, R.string.empty_fullname, Snackbar.LENGTH_SHORT).show();
+                } else if (phone.isEmpty()) {
+                    Snackbar.make(parentView, R.string.empty_phone, Snackbar.LENGTH_SHORT).show();
+                } else if (address.isEmpty()) {
+                    Snackbar.make(parentView, R.string.empty_address, Snackbar.LENGTH_SHORT).show();
+                }
+            }
 
             if (password.isEmpty()) {
                 Snackbar.make(parentView, R.string.empty_password, Snackbar.LENGTH_SHORT).show();
@@ -110,7 +206,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, AdministratorActivity.class));
+        switch (role_id) {
+            case 1:
+                startActivity(new Intent(this, AdministratorActivity.class));
+                break;
+            case 2:
+                startActivity(new Intent(this, CustomerActivity.class));
+                break;
+            case 3:
+                break;
+        }
+
         finish();
     }
 }

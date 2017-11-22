@@ -47,8 +47,21 @@
     <string name="view_report">Lihat Laporan</string>
     <string name="choose_date">Pilih Tanggal</string>
     <string name="profile">Profil</string>
-    <string name="password_confirmation">Konfirmasi Password</string>
+    <string name="password_confirmation">Konfirmasi Kata Sandi</string>
     <string name="password_update">Ubah Password</string>
     <string name="empty_password_confirmation">Konfirmasi Kata Sandi wajib diisi</string>
     <string name="comparison_password">Konfirmasi Kata Sandi wajib sama dengan Kata Sandi</string>
+    <string name="notification">Notifikasi</string>
+    <string name="empty_pet">Anda belum mendaftarkan hewan kesayangan anda</string>
+    <string name="pet_name">Nama Hewan</string>
+    <string name="sex">Jenis Kelamin</string>
+    <string name="male">Laki-laki</string>
+    <string name="female">Perempuan</string>
+    <string name="dob">Tanggal Lahir</string>
+    <string name="age">Usia</string>
+    <string name="breed">Ras</string>
+    <string name="color">Warna</string>
+    <string name="pet_type">Jenis Hewan</string>
+    <string name="cat">Kucing</string>
+    <string name="dog">Anjing</string>
 </resources>

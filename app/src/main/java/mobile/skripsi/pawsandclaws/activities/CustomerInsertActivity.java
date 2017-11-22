@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 
 import mobile.skripsi.pawsandclaws.R;
 import mobile.skripsi.pawsandclaws.api.APIService;
@@ -116,7 +115,7 @@ public class CustomerInsertActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, CustomerActivity.class));
+        startActivity(new Intent(this, CustomerListActivity.class));
         finish();
     }
 }

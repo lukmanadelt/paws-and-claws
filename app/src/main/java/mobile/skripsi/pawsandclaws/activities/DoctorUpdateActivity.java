@@ -166,7 +166,7 @@ public class DoctorUpdateActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, DoctorActivity.class));
+        startActivity(new Intent(this, DoctorListActivity.class));
         finish();
     }
 }

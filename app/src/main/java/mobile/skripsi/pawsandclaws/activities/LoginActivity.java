@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case 2:
                 // Role as Customer
-//                Intent intent = new Intent(LoginActivity.this, CustomerActivity.class);
+                startActivity(new Intent(this, CustomerActivity.class));
                 break;
             case 3:
                 // Role as Doctor

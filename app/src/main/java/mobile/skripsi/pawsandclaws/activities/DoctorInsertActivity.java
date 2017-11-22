@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 
 import mobile.skripsi.pawsandclaws.R;
 import mobile.skripsi.pawsandclaws.api.APIService;
@@ -108,7 +107,7 @@ public class DoctorInsertActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, DoctorActivity.class));
+        startActivity(new Intent(this, DoctorListActivity.class));
         finish();
     }
 }

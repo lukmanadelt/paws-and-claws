@@ -15,9 +15,89 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@+id/etUsername"
+            android:text="@string/username"
+            android:textColor="@color/colorPrimary"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/etUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvUsername"
+            android:inputType="text|textPersonName"
+            android:maxLines="1"
+            android:textColor="@color/colorPrimary"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvFullname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etUsername"
+            android:labelFor="@+id/etFullname"
+            android:text="@string/fullname"
+            android:textColor="@color/colorPrimary"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/etFullname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvFullname"
+            android:inputType="text|textPersonName"
+            android:maxLines="1"
+            android:textColor="@color/colorPrimary"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etFullname"
+            android:labelFor="@+id/etPhone"
+            android:text="@string/phone"
+            android:textColor="@color/colorPrimary"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvPhone"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:textColor="@color/colorPrimary"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etPhone"
+            android:labelFor="@+id/etAddress"
+            android:text="@string/address"
+            android:textColor="@color/colorPrimary"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/etAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvAddress"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/colorPrimary"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/tvPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/etAddress"
             android:labelFor="@+id/etPassword"
             android:text="@string/password"
             android:textColor="@color/colorPrimary" />
@@ -51,14 +131,14 @@
             android:textColor="@color/colorPrimary" />
 
         <Button
-            android:id="@+id/bUpdatePassword"
+            android:id="@+id/bUpdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/etPasswordConfirmation"
             android:background="@drawable/image_button_green"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:text="@string/password_update"
+            android:text="@string/update"
             android:textColor="@color/colorWhite" />
     </RelativeLayout>
 </ScrollView>

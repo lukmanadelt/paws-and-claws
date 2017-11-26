@@ -28,8 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvPetName"
             android:inputType="text|textPersonName"
-            android:maxLines="1"
-            android:textColor="@color/colorPrimary" />
+            android:maxLines="1" />
 
         <TextView
             android:id="@+id/tvPetType"
@@ -123,8 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvAge"
             android:inputType="numberDecimal"
-            android:maxLines="1"
-            android:textColor="@color/colorPrimary" />
+            android:maxLines="1" />
 
         <TextView
             android:id="@+id/tvBreed"
@@ -140,8 +138,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvBreed"
             android:inputType="text"
-            android:maxLines="1"
-            android:textColor="@color/colorPrimary" />
+            android:maxLines="1" />
 
         <TextView
             android:id="@+id/tvColor"
@@ -157,8 +154,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvColor"
             android:inputType="text"
-            android:maxLines="1"
-            android:textColor="@color/colorPrimary" />
+            android:maxLines="1" />
 
         <Button
             android:id="@+id/bInsert"

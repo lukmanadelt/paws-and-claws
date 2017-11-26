@@ -60,7 +60,7 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
         sReportAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sReport.setAdapter(sReportAdapter);
 
-        // Inital Date Picker element
+        // Initial Date Picker element
         cDate = Calendar.getInstance();
         year = cDate.get(Calendar.YEAR);
         month = cDate.get(Calendar.MONTH);

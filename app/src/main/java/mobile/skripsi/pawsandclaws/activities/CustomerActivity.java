@@ -18,7 +18,7 @@ import mobile.skripsi.pawsandclaws.helper.SharedPreferencesManager;
 
 /**
  * Customer Activity
- * Created by Sleekr on 11/22/2017.
+ * Created by @lukmanadelt on 11/22/2017.
  */
 
 public class CustomerActivity extends AppCompatActivity implements View.OnClickListener {
@@ -54,8 +54,8 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         if (v == fabInsert) {
-//            startActivity(new Intent(this, PetInsertActivity.class));
-//            finish();
+            startActivity(new Intent(this, PetInsertActivity.class));
+            finish();
         }
     }
 

@@ -4,6 +4,7 @@ import mobile.skripsi.pawsandclaws.model.User;
 import mobile.skripsi.pawsandclaws.model.Users;
 import mobile.skripsi.pawsandclaws.model.Result;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -88,7 +89,6 @@ public interface APIService {
     );
 
     @FormUrlEncoded
-    @Multipart
     @POST("pets/insert")
     Call<Result> insertPet(
             @Field("pet_category_id") int pet_category_id,
@@ -99,6 +99,10 @@ public interface APIService {
             @Field("age") int age,
             @Field("breed") String breed,
             @Field("color") String color,
-            @Part MultipartBody.Part file
+            @Field("photo") String photo
     );
+
+    @Multipart
+    @POST("pets/upload")
+    Call<Result> uploadFile(@Part MultipartBody.Part file, @Part("file") RequestBody name);
 }

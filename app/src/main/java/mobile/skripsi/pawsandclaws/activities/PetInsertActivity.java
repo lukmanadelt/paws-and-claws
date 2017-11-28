@@ -1,25 +1,24 @@
 package mobile.skripsi.pawsandclaws.activities;
 
-import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
-
-import com.squareup.picasso.Picasso;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -35,8 +34,6 @@ import java.util.Date;
 import mobile.skripsi.pawsandclaws.R;
 import mobile.skripsi.pawsandclaws.api.APIService;
 import mobile.skripsi.pawsandclaws.api.APIUrl;
-import mobile.skripsi.pawsandclaws.helper.PermissionsActivity;
-import mobile.skripsi.pawsandclaws.helper.PermissionsChecker;
 import mobile.skripsi.pawsandclaws.helper.SharedPreferencesManager;
 import mobile.skripsi.pawsandclaws.model.Result;
 import okhttp3.MediaType;
@@ -55,18 +52,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PetInsertActivity extends AppCompatActivity implements View.OnClickListener {
     private View parentView;
+    private TextView tvPhoto;
+    private ImageView ivPhoto;
     private EditText etPetName, etDOB, etAge, etBreed, etColor;
     private RadioButton rbDog, rbCat, rbMale, rbFemale;
-    private Button bInsert;
+    private Button bInsert, bUpload;
     private int id, pet_type, age;
-    private String pet_name, sex, dob, breed, color, imagePath;
+    private String pet_name, sex, dob, breed, color, photo, mediaPath;
     private Calendar cDate;
     private int year, month, day;
     private DecimalFormat decimalFormat;
-    private Date date_from, date_to;
-    private static final String[] PERMISSIONS_READ_STORAGE = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
-    private PermissionsChecker permissionsChecker;
-    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,11 +70,10 @@ public class PetInsertActivity extends AppCompatActivity implements View.OnClick
         JodaTimeAndroid.init(this);
         setContentView(R.layout.activity_pet_insert);
 
-        // Permission Checker Initialized
-        permissionsChecker = new PermissionsChecker(this);
-
         // Initial Component
         parentView = findViewById(R.id.parentLayout);
+        tvPhoto = findViewById(R.id.tvPhoto);
+        ivPhoto = findViewById(R.id.ivPhoto);
         etPetName = findViewById(R.id.etPetName);
         etDOB = findViewById(R.id.etDOB);
         etAge = findViewById(R.id.etAge);
@@ -89,10 +83,13 @@ public class PetInsertActivity extends AppCompatActivity implements View.OnClick
         rbCat = findViewById(R.id.rbCat);
         rbMale = findViewById(R.id.rbMale);
         rbFemale = findViewById(R.id.rbFemale);
+        bUpload = findViewById(R.id.bUpload);
         bInsert = findViewById(R.id.bInsert);
 
         // Set component to listen click event
         etDOB.setOnClickListener(this);
+        tvPhoto.setOnClickListener(this);
+        bUpload.setOnClickListener(this);
         bInsert.setOnClickListener(this);
 
         // Initial Customer ID
@@ -123,12 +120,7 @@ public class PetInsertActivity extends AppCompatActivity implements View.OnClick
 
         APIService service = retrofit.create(APIService.class);
 
-        File file = new File(imagePath);
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part body =
-                MultipartBody.Part.createFormData("uploaded_file", file.getName(), requestFile);
-
-        Call<Result> call = service.insertPet(pet_type, id, pet_name, sex, dob, age, breed, color, body);
+        Call<Result> call = service.insertPet(pet_type, id, pet_name, sex, dob, age, breed, color, photo);
 
         call.enqueue(new Callback<Result>() {
             @Override
@@ -136,8 +128,6 @@ public class PetInsertActivity extends AppCompatActivity implements View.OnClick
                 progressDialog.dismiss();
 
                 if (response.body().getSuccess()) onBackPressed();
-
-                imagePath = "";
 
                 Snackbar.make(parentView, response.body().getMessage(), Snackbar.LENGTH_SHORT).show();
             }
@@ -153,6 +143,14 @@ public class PetInsertActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tvPhoto:
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent, 0);
+                break;
+            case R.id.bUpload:
+                uploadPhoto();
+                break;
             case R.id.etDOB:
                 setDate(v, 999);
                 break;
@@ -177,8 +175,6 @@ public class PetInsertActivity extends AppCompatActivity implements View.OnClick
                     Snackbar.make(parentView, R.string.empty_pet_type, Snackbar.LENGTH_SHORT).show();
                 } else if (!rbMale.isChecked() && !rbFemale.isChecked()) {
                     Snackbar.make(parentView, R.string.empty_sex, Snackbar.LENGTH_SHORT).show();
-                } else if (!TextUtils.isEmpty(imagePath)) {
-                    Snackbar.make(parentView, R.string.empty_photo, Snackbar.LENGTH_SHORT).show();
                 } else {
                     if (rbDog.isChecked()) {
                         pet_type = 1;
@@ -232,7 +228,7 @@ public class PetInsertActivity extends AppCompatActivity implements View.OnClick
         getAge(year, month, day);
     }
 
-    private void getAge(int year, int month, int day){
+    private void getAge(int year, int month, int day) {
         Calendar cDOB = Calendar.getInstance();
         Calendar cToday = Calendar.getInstance();
 
@@ -248,59 +244,75 @@ public class PetInsertActivity extends AppCompatActivity implements View.OnClick
         etAge.setText(age.toString());
     }
 
-    public void showImagePopup(View view) {
-        if (permissionsChecker.lacksPermissions(PERMISSIONS_READ_STORAGE)) {
-            startPermissionsActivity(PERMISSIONS_READ_STORAGE);
-        } else {
-            // File System.
-            final Intent galleryIntent = new Intent();
-            galleryIntent.setType("image/*");
-            galleryIntent.setAction(Intent.ACTION_PICK);
-
-            // Chooser of file system options.
-            final Intent chooserIntent = Intent.createChooser(galleryIntent, getString(R.string.string_choose_image));
-            startActivityForResult(chooserIntent, 1010);
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        try {
+            // When an image is picked
+            if (requestCode == 0 && resultCode == RESULT_OK && null != data) {
+                // Get the image from data
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
-        if (resultCode == RESULT_OK && requestCode == 1010) {
-            if (data == null) {
-                Snackbar.make(parentView, R.string.string_unable_to_pick_image, Snackbar.LENGTH_INDEFINITE).show();
-                return;
-            }
-
-            Uri selectedImageUri = data.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-            Cursor cursor = getContentResolver().query(selectedImageUri, filePathColumn, null, null, null);
-
-            if (cursor != null) {
+                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                assert cursor != null;
                 cursor.moveToFirst();
 
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                imagePath = cursor.getString(columnIndex);
+                mediaPath = cursor.getString(columnIndex);
 
-                Picasso.with(mContext).load(new File(imagePath))
-                        .into(imageView);
-
-                Snackbar.make(parentView, R.string.string_reselect, Snackbar.LENGTH_LONG).show();
+                // Set the image in ImageView for previewing the media
+                tvPhoto.setVisibility(View.GONE);
+                ivPhoto.setVisibility(View.VISIBLE);
+                ivPhoto.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
                 cursor.close();
-
-                textView.setVisibility(View.GONE);
-                imageView.setVisibility(View.VISIBLE);
             } else {
-                textView.setVisibility(View.VISIBLE);
-                imageView.setVisibility(View.GONE);
-                Snackbar.make(parentView, R.string.string_unable_to_load_image, Snackbar.LENGTH_LONG).show();
+                Toast.makeText(this, "Anda belum memilih foto", Toast.LENGTH_LONG).show();
             }
+        } catch (Exception e) {
+            Toast.makeText(this, "Terdapat kesalahan sistem", Toast.LENGTH_LONG).show();
         }
     }
 
-    private void startPermissionsActivity(String[] permission) {
-        PermissionsActivity.startActivityForResult(this, 0, permission);
+    // Uploading a photo
+    private void uploadPhoto() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Mengunggah...");
+        progressDialog.show();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(APIUrl.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        // Map is used to multipart the file using okhttp3.RequestBody
+        File file = new File(mediaPath);
+
+        // Parsing any media type file
+        RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
+        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
+
+        APIService service = retrofit.create(APIService.class);
+
+        Call<Result> call = service.uploadFile(fileToUpload, filename);
+
+        call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                progressDialog.dismiss();
+
+                if (response.body().getSuccess()) photo = response.body().getPhoto();
+
+                Snackbar.make(parentView, response.body().getMessage(), Snackbar.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                progressDialog.dismiss();
+                Snackbar.make(parentView, t.getMessage(), Snackbar.LENGTH_SHORT).show();
+            }
+        });
     }
 }

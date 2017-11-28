@@ -14,6 +14,9 @@ public class Result {
     @SerializedName("message")
     private String message;
 
+    @SerializedName("photo")
+    private String photo;
+
     @SerializedName("user")
     private User user;
 
@@ -37,9 +40,19 @@ public class Result {
         return message;
     }
 
-    public User getUser() { return user; }
+    public String getPhoto() {
+        return photo;
+    }
 
-    public User getDoctor() { return doctor; }
+    public User getUser() {
+        return user;
+    }
 
-    public User getCustomer() { return customer; }
+    public User getDoctor() {
+        return doctor;
+    }
+
+    public User getCustomer() {
+        return customer;
+    }
 }

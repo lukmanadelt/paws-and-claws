@@ -73,13 +73,6 @@
     <string name="empty_sex">Jenis Kelamin wajib diisi</string>
     <string name="pet_insert">Tambah Hewan</string>
     <string name="empty_photo">Foto wajib diisi</string>
-
-    <string name="help">Help</string>
-    <string name="string_help_text"> The permission is missing.\n\nTo grant this permission click on Settings, then Permissions and turn the permission on.\n\nThen click back twice to return to the app</string>
-    <string name="quit">Exit App</string>
-    <string name="settings">Settings</string>
-    <string name="string_choose_image">Select Image to Upload</string>
-    <string name="string_unable_to_pick_image">Unable to Pickup Image</string>
-    <string name="string_reselect">Click on Image to Reselect</string>
-    <string name="string_unable_to_load_image">Unable to Load Image</string>
+    <string name="pick_photo">Pilih foto klik disini...</string>
+    <string name="upload">Unggah</string>
 </resources>

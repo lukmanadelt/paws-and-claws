@@ -1,5 +1,6 @@
 package mobile.skripsi.pawsandclaws.api;
 
+import mobile.skripsi.pawsandclaws.model.Pets;
 import mobile.skripsi.pawsandclaws.model.User;
 import mobile.skripsi.pawsandclaws.model.Users;
 import mobile.skripsi.pawsandclaws.model.Result;
@@ -105,4 +106,7 @@ public interface APIService {
     @Multipart
     @POST("pets/upload")
     Call<Result> uploadFile(@Part MultipartBody.Part file, @Part("file") RequestBody name);
+
+    @GET("customer/pets/{user_id}")
+    Call<Pets> getPets(@Path("user_id") int user_id);
 }

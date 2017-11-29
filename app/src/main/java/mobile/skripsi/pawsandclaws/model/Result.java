@@ -26,6 +26,9 @@ public class Result {
     @SerializedName("customer")
     private User customer;
 
+    @SerializedName("pet")
+    private Pet pet;
+
     public Result(Boolean success, String message, User user) {
         this.success = success;
         this.message = message;
@@ -54,5 +57,9 @@ public class Result {
 
     public User getCustomer() {
         return customer;
+    }
+
+    public Pet getPet() {
+        return pet;
     }
 }

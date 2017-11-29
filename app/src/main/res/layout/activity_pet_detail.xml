@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="mobile.skripsi.pawsandclaws.activities.PetDetailActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableLayout
+            android:id="@+id/tlPet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_column="0"
+                    android:padding="5dp"
+                    android:text="@string/pet_type"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_column="1"
+                    android:padding="5dp"
+                    android:text="@string/colon"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tvPetType"
+                    android:layout_column="2"
+                    android:padding="5dp"
+                    android:textColor="@color/colorPrimary" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_column="0"
+                    android:padding="5dp"
+                    android:text="@string/pet_name"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_column="1"
+                    android:padding="5dp"
+                    android:text="@string/colon"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tvPetName"
+                    android:layout_column="2"
+                    android:padding="5dp"
+                    android:textColor="@color/colorPrimary" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_column="0"
+                    android:padding="5dp"
+                    android:text="@string/sex"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_column="1"
+                    android:padding="5dp"
+                    android:text="@string/colon"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tvSex"
+                    android:layout_column="2"
+                    android:padding="5dp"
+                    android:textColor="@color/colorPrimary" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_column="0"
+                    android:padding="5dp"
+                    android:text="@string/dob"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_column="1"
+                    android:padding="5dp"
+                    android:text="@string/colon"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tvDOB"
+                    android:layout_column="2"
+                    android:padding="5dp"
+                    android:textColor="@color/colorPrimary" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_column="0"
+                    android:padding="5dp"
+                    android:text="@string/age"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_column="1"
+                    android:padding="5dp"
+                    android:text="@string/colon"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tvAge"
+                    android:layout_column="2"
+                    android:padding="5dp"
+                    android:textColor="@color/colorPrimary" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_column="0"
+                    android:padding="5dp"
+                    android:text="@string/breed"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_column="1"
+                    android:padding="5dp"
+                    android:text="@string/colon"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tvBreed"
+                    android:layout_column="2"
+                    android:padding="5dp"
+                    android:textColor="@color/colorPrimary" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_column="0"
+                    android:padding="5dp"
+                    android:text="@string/color"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_column="1"
+                    android:padding="5dp"
+                    android:text="@string/colon"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tvColor"
+                    android:layout_column="2"
+                    android:padding="5dp"
+                    android:textColor="@color/colorPrimary" />
+            </TableRow>
+        </TableLayout>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tlPet">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/bUpdate"
+                    android:layout_column="0"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/image_button_green"
+                    android:text="@string/update"
+                    android:textColor="@color/colorWhite" />
+
+                <Button
+                    android:id="@+id/bDelete"
+                    android:layout_column="1"
+                    android:layout_weight="1"
+                    android:background="@drawable/image_button_green"
+                    android:text="@string/delete"
+                    android:textColor="@color/colorWhite" />
+            </TableRow>
+        </TableLayout>
+    </RelativeLayout>
+</ScrollView>

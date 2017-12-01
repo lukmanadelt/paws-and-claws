@@ -109,4 +109,7 @@ public interface APIService {
 
     @GET("customer/pets/{user_id}")
     Call<Pets> getPets(@Path("user_id") int user_id);
+
+    @GET("pets/{id}")
+    Call<Result> getPet(@Path("id") int id);
 }

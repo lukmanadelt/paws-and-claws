@@ -54,5 +54,8 @@
         <activity
             android:name=".activities.PetInsertActivity"
             android:label="@string/pet_insert" />
+        <activity
+            android:name=".activities.PetDetailActivity"
+            android:label="@string/pet_detail" />
     </application>
 </manifest>

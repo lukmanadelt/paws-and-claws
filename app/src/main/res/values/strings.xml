@@ -75,4 +75,7 @@
     <string name="empty_photo">Foto wajib diisi</string>
     <string name="pick_photo">Pilih foto klik disini...</string>
     <string name="upload">Unggah</string>
+    <string name="pet_detail">Rincian Hewan</string>
+    <string name="view_detail">Lihat Rincian</string>
+    <string name="examination_history">Sejarah Pemeriksaan</string>
 </resources>

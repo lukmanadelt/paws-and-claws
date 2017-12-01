@@ -7,5 +7,5 @@ package mobile.skripsi.pawsandclaws.api;
 
 public class APIUrl {
     // Initial API Base Url
-    public static final String BASE_URL = "http://192.168.0.113/paws-and-claws-api/public/";
+    public static final String BASE_URL = "http://192.168.0.100/paws-and-claws-api/public/";
 }

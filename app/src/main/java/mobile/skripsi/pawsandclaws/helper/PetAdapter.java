@@ -15,6 +15,7 @@ import java.util.List;
 
 import mobile.skripsi.pawsandclaws.R;
 import mobile.skripsi.pawsandclaws.activities.CustomerDetailActivity;
+import mobile.skripsi.pawsandclaws.activities.PetDetailActivity;
 import mobile.skripsi.pawsandclaws.activities.ProfileActivity;
 import mobile.skripsi.pawsandclaws.model.Pet;
 
@@ -70,7 +71,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.ViewHolder> {
 
                         switch (item.getItemId()) {
                             case R.id.iViewDetail:
-//                                actionPet = new Intent(mCtx, PetDetailActivity.class);
+                                actionPet = new Intent(mCtx, PetDetailActivity.class);
                                 break;
                             case R.id.iExaminationHistory:
 //                                actionPet = new Intent(mCtx, PetExaminationHistoryActivity.class);
@@ -78,6 +79,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.ViewHolder> {
                         }
 
                         actionPet.putExtra("pet_id", pet.getId());
+                        actionPet.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mCtx.startActivity(actionPet);
 
                         return true;

@@ -53,7 +53,7 @@ public class CustomerDetailActivity extends AppCompatActivity implements View.On
         // Initial doctor id from previous activity
         id = getIntent().getIntExtra("customer_id", 0);
 
-        // Getting a doctor
+        // Getting a customer
         getCustomer(id);
     }
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parentLayout"
     android:layout_width="match_parent"
@@ -13,44 +12,55 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/tvPhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="16dp"
-            android:clickable="true"
-            android:text="@string/pick_photo"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/colorPrimary" />
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/ivPhoto"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_below="@+id/tvPhoto"
             android:layout_marginBottom="16dp"
+            android:contentDescription="@string/photo"
             android:scaleType="centerCrop"
             android:visibility="gone" />
 
-        <Button
-            android:id="@+id/bUpload"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/llButton"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ivPhoto"
-            android:layout_centerHorizontal="true"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/image_button_green"
-            android:text="@string/upload"
-            android:textColor="@color/colorWhite" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/bPhotoChoose"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/image_button_green"
+                android:text="@string/photo_choose"
+                android:textColor="@color/colorWhite" />
+
+            <Button
+                android:id="@+id/bPhotoUpload"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/image_button_green"
+                android:text="@string/photo_upload"
+                android:textColor="@color/colorWhite" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvPetName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/bUpload"
+            android:layout_below="@+id/llButton"
+            android:labelFor="@+id/etPetName"
             android:text="@string/pet_name"
             android:textColor="@color/colorPrimary" />
 
@@ -60,7 +70,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvPetName"
             android:inputType="text|textPersonName"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:textColor="@color/colorGray" />
 
         <TextView
             android:id="@+id/tvPetType"
@@ -81,15 +92,17 @@
                 android:id="@+id/rbDog"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/colorPrimary"
-                android:text="@string/dog" />
+                android:text="@string/dog"
+                android:textColor="@color/colorGray"
+                tools:buttonTint="@color/colorPrimary" />
 
             <RadioButton
                 android:id="@+id/rbCat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/colorPrimary"
-                android:text="@string/cat" />
+                android:text="@string/cat"
+                android:textColor="@color/colorGray"
+                tools:buttonTint="@color/colorPrimary" />
         </RadioGroup>
 
         <TextView
@@ -111,15 +124,17 @@
                 android:id="@+id/rbMale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/colorPrimary"
-                android:text="@string/male" />
+                android:text="@string/male"
+                android:textColor="@color/colorGray"
+                tools:buttonTint="@color/colorPrimary" />
 
             <RadioButton
                 android:id="@+id/rbFemale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/colorPrimary"
-                android:text="@string/female" />
+                android:text="@string/female"
+                android:textColor="@color/colorGray"
+                tools:buttonTint="@color/colorPrimary" />
         </RadioGroup>
 
         <TextView
@@ -127,6 +142,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rgSex"
+            android:labelFor="@+id/etDOB"
             android:text="@string/dob"
             android:textColor="@color/colorPrimary" />
 
@@ -137,30 +153,17 @@
             android:layout_below="@+id/tvDOB"
             android:clickable="true"
             android:cursorVisible="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false" />
-
-        <TextView
-            android:id="@+id/tvAge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/etDOB"
-            android:text="@string/age"
-            android:textColor="@color/colorPrimary" />
-
-        <EditText
-            android:id="@+id/etAge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvAge"
-            android:inputType="numberDecimal"
-            android:maxLines="1" />
+            android:focusable="true"
+            android:focusableInTouchMode="false"
+            android:inputType="date"
+            android:textColor="@color/colorGray" />
 
         <TextView
             android:id="@+id/tvBreed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/etAge"
+            android:layout_below="@+id/etDOB"
+            android:labelFor="@+id/etBreed"
             android:text="@string/breed"
             android:textColor="@color/colorPrimary" />
 
@@ -170,13 +173,15 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvBreed"
             android:inputType="text"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:textColor="@color/colorGray" />
 
         <TextView
             android:id="@+id/tvColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/etBreed"
+            android:labelFor="@+id/etColor"
             android:text="@string/color"
             android:textColor="@color/colorPrimary" />
 
@@ -185,8 +190,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvColor"
+            android:layout_marginBottom="16dp"
             android:inputType="text"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:textColor="@color/colorGray" />
 
         <Button
             android:id="@+id/bInsert"

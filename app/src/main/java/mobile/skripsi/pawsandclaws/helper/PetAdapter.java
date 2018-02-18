@@ -7,16 +7,15 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.util.List;
 
 import mobile.skripsi.pawsandclaws.R;
-import mobile.skripsi.pawsandclaws.activities.CustomerDetailActivity;
+import mobile.skripsi.pawsandclaws.activities.ExaminationHistoryActivity;
+import mobile.skripsi.pawsandclaws.activities.ExaminationNextActivity;
 import mobile.skripsi.pawsandclaws.activities.PetDetailActivity;
-import mobile.skripsi.pawsandclaws.activities.ProfileActivity;
 import mobile.skripsi.pawsandclaws.model.Pet;
 
 /**
@@ -74,13 +73,18 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.ViewHolder> {
                                 actionPet = new Intent(mCtx, PetDetailActivity.class);
                                 break;
                             case R.id.iExaminationHistory:
-//                                actionPet = new Intent(mCtx, PetExaminationHistoryActivity.class);
+                                actionPet = new Intent(mCtx, ExaminationHistoryActivity.class);
+                                break;
+                            case R.id.iNextVaccinationSchedule:
+                                actionPet = new Intent(mCtx, ExaminationNextActivity.class);
                                 break;
                         }
 
-                        actionPet.putExtra("pet_id", pet.getId());
-                        actionPet.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        mCtx.startActivity(actionPet);
+                        if (actionPet != null) {
+                            actionPet.putExtra("pet_id", pet.getId());
+                            actionPet.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            mCtx.startActivity(actionPet);
+                        }
 
                         return true;
                     }
@@ -98,9 +102,9 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvName, tvAction;
+        private TextView tvName, tvAction;
 
-        public ViewHolder(View itemView) {
+        private ViewHolder(View itemView) {
             super(itemView);
 
             tvName = itemView.findViewById(R.id.tvName);

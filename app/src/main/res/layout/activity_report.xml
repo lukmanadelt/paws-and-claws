@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parentLayout"
     android:layout_width="match_parent"
@@ -13,7 +12,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tvReport"
@@ -44,9 +43,12 @@
             android:layout_below="@+id/tvStartDate"
             android:clickable="true"
             android:cursorVisible="false"
-            android:focusable="false"
+            android:focusable="true"
             android:focusableInTouchMode="false"
-            android:hint="@string/choose_date" />
+            android:hint="@string/choose_date"
+            android:inputType="date"
+            android:textColor="@color/colorGray"
+            android:textColorHint="@color/colorGray" />
 
         <TextView
             android:id="@+id/tvEndDate"
@@ -64,9 +66,12 @@
             android:layout_marginBottom="16dp"
             android:clickable="true"
             android:cursorVisible="false"
-            android:focusable="false"
+            android:focusable="true"
             android:focusableInTouchMode="false"
-            android:hint="@string/choose_date" />
+            android:hint="@string/choose_date"
+            android:inputType="date"
+            android:textColor="@color/colorGray"
+            android:textColorHint="@color/colorGray" />
 
         <Button
             android:id="@+id/bViewReport"

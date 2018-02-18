@@ -1,9 +1,13 @@
 package mobile.skripsi.pawsandclaws.api;
 
+import mobile.skripsi.pawsandclaws.model.ExaminationDetails;
+import mobile.skripsi.pawsandclaws.model.Examinations;
+import mobile.skripsi.pawsandclaws.model.Medicals;
+import mobile.skripsi.pawsandclaws.model.Notifications;
 import mobile.skripsi.pawsandclaws.model.Pets;
-import mobile.skripsi.pawsandclaws.model.User;
 import mobile.skripsi.pawsandclaws.model.Users;
 import mobile.skripsi.pawsandclaws.model.Result;
+import mobile.skripsi.pawsandclaws.model.Vaccines;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -97,7 +101,6 @@ public interface APIService {
             @Field("name") String name,
             @Field("sex") String sex,
             @Field("dob") String dob,
-            @Field("age") int age,
             @Field("breed") String breed,
             @Field("color") String color,
             @Field("photo") String photo
@@ -112,4 +115,85 @@ public interface APIService {
 
     @GET("pets/{id}")
     Call<Result> getPet(@Path("id") int id);
+
+    @FormUrlEncoded
+    @POST("pets/update/{id}")
+    Call<Result> updatePet(
+            @Path("id") int id,
+            @Field("pet_category_id") int pet_category_id,
+            @Field("name") String name,
+            @Field("sex") String sex,
+            @Field("dob") String dob,
+            @Field("breed") String breed,
+            @Field("color") String color,
+            @Field("photo") String photo
+    );
+
+    @GET("pets/vaccine_recommendation/{user_id}")
+    Call<Pets> getVaccineRecommendation(@Path("user_id") int user_id);
+
+    @GET("customer/havePets")
+    Call<Users> getCustomerHavePets();
+
+    @GET("vaccines/{pet_id}")
+    Call<Vaccines> getVaccines(@Path("pet_id") int pet_id);
+
+    @GET("medicals")
+    Call<Medicals> getMedicals();
+
+    @GET("examinations/{pet_id}")
+    Call<Examinations> getExaminations(@Path("pet_id") int pet_id);
+
+    @GET("examinations/vaccine/{pet_id}/{period}")
+    Call<Result> getVaccineExamination(@Path("pet_id") int pet_id, @Path("period") String period);
+
+    @GET("examinations/medical/{pet_id}/{period}")
+    Call<Result> getMedicalExamination(@Path("pet_id") int pet_id, @Path("period") String period);
+
+    @GET("examination_details/vaccine/{pet_id}/{period}")
+    Call<ExaminationDetails> getVaccineExaminationDetails(@Path("pet_id") int pet_id, @Path("period") String period);
+
+    @GET("examination_details/medical/{pet_id}/{period}")
+    Call<ExaminationDetails> getMedicalExaminationDetails(@Path("pet_id") int pet_id, @Path("period") String period);
+
+    @GET("examinations/next/{pet_id}")
+    Call<ExaminationDetails> getNextExaminations(@Path("pet_id") int pet_id);
+
+    @GET("reports/vaccines/{period_start}/{period_end}")
+    Call<Vaccines> getReportVaccines(@Path("period_start") String period_start, @Path("period_end") String period_end);
+
+    @GET("reports/pets/{period_start}/{period_end}")
+    Call<Pets> getReportPets(@Path("period_start") String period_start, @Path("period_end") String period_end);
+
+    @GET("notifications/{user_id}")
+    Call<Notifications> getNotifications(@Path("user_id") int user_id);
+
+    @FormUrlEncoded
+    @POST("examinations/vaccine/insert")
+    Call<Result> insertVaccineExamination(
+            @Field("id") int id,
+            @Field("pet_id") int pet_id,
+            @Field("weight") Double weight,
+            @Field("temperature") Double temperature,
+            @Field("due_date") String due_date,
+            @Field("given_date") String given_date,
+            @Field("details") String details
+    );
+
+    @FormUrlEncoded
+    @POST("examinations/medical/insert")
+    Call<Result> insertMedicalExamination(
+            @Field("id") int id,
+            @Field("pet_id") int pet_id,
+            @Field("weight") Double weight,
+            @Field("temperature") Double temperature,
+            @Field("size") Double size,
+            @Field("due_date") String due_date,
+            @Field("given_date") String given_date,
+            @Field("details") String details
+    );
+
+    @FormUrlEncoded
+    @POST("pets/delete")
+    Call<Result> deletePet(@Field("id") int id);
 }

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * User Model
- * Created by @lumanadelt on 06/11/2017.
+ * Created by @lukmanadelt on 06/11/2017.
  */
 
 public class User {
@@ -41,6 +41,10 @@ public class User {
     @Expose
     private int status;
 
+    @SerializedName("count_pets")
+    @Expose
+    private int count_pets;
+
     public User(int id, int role_id, String username, String password, String fullname, String phone, String address, int status) {
         this.id = id;
         this.role_id = role_id;
@@ -52,11 +56,12 @@ public class User {
         this.status = status;
     }
 
-    public User(int id, int role_id, String username, String fullname) {
+    public User(int id, int role_id, String username, String fullname, int count_pets) {
         this.id = id;
         this.role_id = role_id;
         this.username = username;
         this.fullname = fullname;
+        this.count_pets = count_pets;
     }
 
     public int getId() {
@@ -82,4 +87,6 @@ public class User {
     public String getAddress() { return address; }
 
     public int getStatus() { return status; }
+
+    public int getCountPets() { return count_pets; }
 }

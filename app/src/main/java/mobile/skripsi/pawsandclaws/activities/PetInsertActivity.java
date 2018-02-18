@@ -17,13 +17,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import net.danlew.android.joda.JodaTimeAndroid;
-
-import org.joda.time.DateTime;
-import org.joda.time.Period;
 
 import java.io.File;
 import java.math.RoundingMode;
@@ -51,14 +47,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PetInsertActivity extends AppCompatActivity implements View.OnClickListener {
     private View parentView;
-    private TextView tvPhoto;
     private ImageView ivPhoto;
-    private EditText etPetName, etDOB, etAge, etBreed, etColor;
+    private EditText etPetName, etDOB, etBreed, etColor;
     private RadioButton rbDog, rbCat, rbMale, rbFemale;
-    private Button bInsert, bUpload;
-    private int id, pet_type, age;
+    private int id, pet_type;
     private String pet_name, sex, dob, breed, color, photo, mediaPath;
-    private Calendar cDate;
     private int year, month, day;
     private DecimalFormat decimalFormat;
 
@@ -71,31 +64,30 @@ public class PetInsertActivity extends AppCompatActivity implements View.OnClick
 
         // Initial Component
         parentView = findViewById(R.id.parentLayout);
-        tvPhoto = findViewById(R.id.tvPhoto);
+        Button bPhotoChoose = findViewById(R.id.bPhotoChoose);
+        Button bPhotoUpload = findViewById(R.id.bPhotoUpload);
+        Button bInsert = findViewById(R.id.bInsert);
         ivPhoto = findViewById(R.id.ivPhoto);
         etPetName = findViewById(R.id.etPetName);
         etDOB = findViewById(R.id.etDOB);
-        etAge = findViewById(R.id.etAge);
         etBreed = findViewById(R.id.etBreed);
         etColor = findViewById(R.id.etColor);
         rbDog = findViewById(R.id.rbDog);
         rbCat = findViewById(R.id.rbCat);
         rbMale = findViewById(R.id.rbMale);
         rbFemale = findViewById(R.id.rbFemale);
-        bUpload = findViewById(R.id.bUpload);
-        bInsert = findViewById(R.id.bInsert);
 
         // Set component to listen click event
         etDOB.setOnClickListener(this);
-        tvPhoto.setOnClickListener(this);
-        bUpload.setOnClickListener(this);
+        bPhotoChoose.setOnClickListener(this);
+        bPhotoUpload.setOnClickListener(this);
         bInsert.setOnClickListener(this);
 
         // Initial Customer ID
         id = SharedPreferencesManager.getInstance(getApplicationContext()).getUser().getId();
 
         // Initial Date Picker element
-        cDate = Calendar.getInstance();
+        Calendar cDate = Calendar.getInstance();
         year = cDate.get(Calendar.YEAR);
         month = cDate.get(Calendar.MONTH);
         day = cDate.get(Calendar.DAY_OF_MONTH);
@@ -119,7 +111,7 @@ public class PetInsertActivity extends AppCompatActivity implements View.OnClick
 
         APIService service = retrofit.create(APIService.class);
 
-        Call<Result> call = service.insertPet(pet_type, id, pet_name, sex, dob, age, breed, color, photo);
+        Call<Result> call = service.insertPet(pet_type, id, pet_name, sex, dob, breed, color, photo);
 
         call.enqueue(new Callback<Result>() {
             @Override
@@ -142,21 +134,24 @@ public class PetInsertActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tvPhoto:
+            case R.id.bPhotoChoose:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, 0);
                 break;
-            case R.id.bUpload:
-                uploadPhoto();
+            case R.id.bPhotoUpload:
+                if (mediaPath != null) {
+                    uploadPhoto();
+                } else {
+                    Snackbar.make(parentView, R.string.empty_upload, Snackbar.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.etDOB:
-                setDate(v, 999);
+                setDate(999);
                 break;
             case R.id.bInsert:
                 pet_name = etPetName.getText().toString().trim();
                 dob = etDOB.getText().toString().trim();
-                age = Integer.parseInt(etAge.getText().toString().trim());
                 breed = etBreed.getText().toString().trim();
                 color = etColor.getText().toString().trim();
 
@@ -164,8 +159,6 @@ public class PetInsertActivity extends AppCompatActivity implements View.OnClick
                     Snackbar.make(parentView, R.string.empty_pet_name, Snackbar.LENGTH_SHORT).show();
                 } else if (dob.isEmpty()) {
                     Snackbar.make(parentView, R.string.empty_dob, Snackbar.LENGTH_SHORT).show();
-                } else if (etAge.getText().toString().trim().isEmpty()) {
-                    Snackbar.make(parentView, R.string.empty_age, Snackbar.LENGTH_SHORT).show();
                 } else if (breed.isEmpty()) {
                     Snackbar.make(parentView, R.string.empty_breed, Snackbar.LENGTH_SHORT).show();
                 } else if (color.isEmpty()) {
@@ -200,7 +193,7 @@ public class PetInsertActivity extends AppCompatActivity implements View.OnClick
     }
 
     @SuppressWarnings("deprecation")
-    public void setDate(View view, int id) {
+    public void setDate(int id) {
         showDialog(id);
     }
 
@@ -217,30 +210,13 @@ public class PetInsertActivity extends AppCompatActivity implements View.OnClick
     private DatePickerDialog.OnDateSetListener dobListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
-            showDate(arg1, arg2 + 1, arg3);
+            showDate(arg1, arg2, arg3);
         }
     };
 
     private void showDate(int year, int month, int day) {
         etDOB.setText(new StringBuilder().append(year).append("-")
-                .append(decimalFormat.format(Double.valueOf(month))).append("-").append(decimalFormat.format(Double.valueOf(day))));
-        getAge(year, month, day);
-    }
-
-    private void getAge(int year, int month, int day) {
-        Calendar cDOB = Calendar.getInstance();
-        Calendar cToday = Calendar.getInstance();
-
-        cDOB.set(year, month, day);
-        cToday.set(cToday.get(Calendar.YEAR), cToday.get(Calendar.MONTH) + 1, cToday.get(Calendar.DAY_OF_MONTH));
-
-        DateTime dtDOB = new DateTime(cDOB.getTime());
-        DateTime dtToday = new DateTime(cToday.getTime());
-
-        Period period = new Period(dtDOB, dtToday);
-        Integer age = new Integer(period.getWeeks());
-
-        etAge.setText(age.toString());
+                .append(decimalFormat.format(Double.valueOf(month + 1))).append("-").append(decimalFormat.format(Double.valueOf(day))));
     }
 
     @Override
@@ -253,18 +229,19 @@ public class PetInsertActivity extends AppCompatActivity implements View.OnClick
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
-                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                assert cursor != null;
-                cursor.moveToFirst();
+                if (selectedImage != null) {
+                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    assert cursor != null;
+                    cursor.moveToFirst();
 
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                mediaPath = cursor.getString(columnIndex);
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    mediaPath = cursor.getString(columnIndex);
 
-                // Set the image in ImageView for previewing the media
-                tvPhoto.setVisibility(View.GONE);
-                ivPhoto.setVisibility(View.VISIBLE);
-                ivPhoto.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
-                cursor.close();
+                    // Set the image in ImageView for previewing the media
+                    ivPhoto.setVisibility(View.VISIBLE);
+                    ivPhoto.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+                    cursor.close();
+                }
             } else {
                 Toast.makeText(this, "Anda belum memilih foto", Toast.LENGTH_LONG).show();
             }

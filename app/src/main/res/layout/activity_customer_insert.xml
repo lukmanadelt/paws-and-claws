@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parentLayout"
     android:layout_width="match_parent"
@@ -13,12 +12,13 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tvUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:labelFor="@+id/etUsername"
             android:text="@string/username"
             android:textColor="@color/colorPrimary" />
 
@@ -29,13 +29,14 @@
             android:layout_below="@+id/tvUsername"
             android:inputType="text|textPersonName"
             android:maxLines="1"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorGray" />
 
         <TextView
             android:id="@+id/tvPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/etUsername"
+            android:labelFor="@+id/etPassword"
             android:text="@string/password"
             android:textColor="@color/colorPrimary" />
 
@@ -46,13 +47,14 @@
             android:layout_below="@+id/tvPassword"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorGray" />
 
         <TextView
             android:id="@+id/tvFullname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/etPassword"
+            android:labelFor="@+id/etFullname"
             android:text="@string/fullname"
             android:textColor="@color/colorPrimary" />
 
@@ -63,13 +65,14 @@
             android:layout_below="@+id/tvFullname"
             android:inputType="text|textPersonName"
             android:maxLines="1"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorGray" />
 
         <TextView
             android:id="@+id/tvPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/etFullname"
+            android:labelFor="@+id/etPhone"
             android:text="@string/phone"
             android:textColor="@color/colorPrimary" />
 
@@ -78,15 +81,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvPhone"
-            android:inputType="numberDecimal"
+            android:inputType="phone"
             android:maxLines="1"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorGray" />
 
         <TextView
             android:id="@+id/tvAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/etPhone"
+            android:labelFor="@+id/etAddress"
             android:text="@string/address"
             android:textColor="@color/colorPrimary" />
 
@@ -98,7 +102,7 @@
             android:layout_marginBottom="16dp"
             android:inputType="text"
             android:maxLines="1"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorGray" />
 
         <Button
             android:id="@+id/bInsert"

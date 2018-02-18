@@ -1,11 +1,10 @@
 package mobile.skripsi.pawsandclaws.helper;
 
-import android.content.ClipData;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,8 +20,8 @@ import mobile.skripsi.pawsandclaws.model.User;
  */
 
 public class UserAdapter extends ArrayAdapter<User> {
-    List<User> userList;
     Context context;
+    private List<User> userList;
     private LayoutInflater mInflater;
 
     // Constructors
@@ -39,7 +38,8 @@ public class UserAdapter extends ArrayAdapter<User> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public @NonNull
+    View getView(int position, View convertView, @NonNull ViewGroup parent) {
         final ViewHolder vh;
         if (convertView == null) {
             View view = mInflater.inflate(R.layout.list_view_user, parent, false);
@@ -51,13 +51,13 @@ public class UserAdapter extends ArrayAdapter<User> {
 
         User item = getItem(position);
 
-        vh.tvFullname.setText(item.getFullname());
+        vh.tvFullname.setText((item != null) ? item.getFullname() : null);
 
         return vh.rootView;
     }
 
     private static class ViewHolder {
-        public final RelativeLayout rootView;
+        private final RelativeLayout rootView;
         public final TextView tvFullname;
 
         private ViewHolder(RelativeLayout rootView, TextView tvFullname) {
@@ -66,7 +66,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         }
 
         public static ViewHolder create(RelativeLayout rootView) {
-            TextView tvFullname = (TextView) rootView.findViewById(R.id.tvFullname);
+            TextView tvFullname = rootView.findViewById(R.id.tvFullname);
 
             return new ViewHolder(rootView, tvFullname);
         }

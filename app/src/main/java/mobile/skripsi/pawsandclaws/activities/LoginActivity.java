@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import mobile.skripsi.pawsandclaws.R;
 import mobile.skripsi.pawsandclaws.api.APIService;
@@ -43,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // If user is already logged in open the activity based on user role
         if (SharedPreferencesManager.getInstance(this).isLoggedIn()) {
             finish();
-            redirectActivity(SharedPreferencesManager.getInstance(getApplicationContext()).getUser().getRoleId());
+            redirectActivity(SharedPreferencesManager.getInstance(getApplicationContext()).getUser().getRoleId(), SharedPreferencesManager.getInstance(getApplicationContext()).getUser().getCountPets());
         }
 
         // Initial Component
@@ -81,7 +82,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 if (response.body().getSuccess()) {
                     SharedPreferencesManager.getInstance(getApplicationContext()).login(response.body().getUser());
-                    redirectActivity(response.body().getUser().getRoleId());
+                    redirectActivity(response.body().getUser().getRoleId(), response.body().getUser().getCountPets());
                     finish();
                 }
 
@@ -91,7 +92,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
                 progressDialog.dismiss();
-                Snackbar.make(parentView, t.getMessage(), Snackbar.LENGTH_SHORT).show();
+//                Snackbar.make(parentView, t.getMessage(), Snackbar.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -99,7 +101,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     /**
      * Method to redirect to another activity based on user role
      */
-    private void redirectActivity(int role_id) {
+    private void redirectActivity(int role_id, int count_pets) {
         switch (role_id) {
             case 1:
                 // Role as Administrator
@@ -107,11 +109,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case 2:
                 // Role as Customer
-                startActivity(new Intent(this, CustomerActivity.class));
+                if (count_pets == 0) {
+                    startActivity(new Intent(this, CustomerActivity.class));
+                } else {
+                    startActivity(new Intent(this, VaccineRecommendationActivity.class));
+                }
+
                 break;
             case 3:
                 // Role as Doctor
-//                Intent intent = new Intent(LoginActivity.this, DoctorActivity.class);
+                startActivity(new Intent(this, DoctorActivity.class));
                 break;
         }
     }

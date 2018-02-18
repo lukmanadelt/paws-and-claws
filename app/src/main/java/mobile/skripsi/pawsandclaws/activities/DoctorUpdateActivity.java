@@ -21,7 +21,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Update Doctor Activity
+ * Doctor Update Activity
  * Created by @lukmanadelt on 11/9/2017.
  */
 

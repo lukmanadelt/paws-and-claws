@@ -28,11 +28,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
     private View parentView;
-    private TextView tvUsername, tvFullname, tvPhone, tvAddress;
     private EditText etUsername, etFullname, etPhone, etAddress, etPassword, etPasswordConfirmation;
     private Button bUpdate;
     private int id, role_id;
-    private String username, fullname, phone, address, password, password_confirmation;
+    private String username, fullname, phone, address, password_confirmation;
     private Call<Result> call;
 
     @Override
@@ -43,10 +42,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         // Initial Component
         parentView = findViewById(R.id.parentLayout);
-        tvUsername = findViewById(R.id.tvUsername);
-        tvFullname = findViewById(R.id.tvFullname);
-        tvPhone = findViewById(R.id.tvPhone);
-        tvAddress = findViewById(R.id.tvAddress);
+        TextView tvUsername = findViewById(R.id.tvUsername);
+        TextView tvFullname = findViewById(R.id.tvFullname);
+        TextView tvPhone = findViewById(R.id.tvPhone);
+        TextView tvAddress = findViewById(R.id.tvAddress);
         etUsername = findViewById(R.id.etUsername);
         etFullname = findViewById(R.id.etFullname);
         etPhone = findViewById(R.id.etPhone);
@@ -74,6 +73,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 etAddress.setVisibility(View.VISIBLE);
                 break;
             case 3:
+                tvUsername.setVisibility(View.VISIBLE);
+                tvFullname.setVisibility(View.VISIBLE);
+                etUsername.setVisibility(View.VISIBLE);
+                etFullname.setVisibility(View.VISIBLE);
                 break;
         }
 
@@ -119,6 +122,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         etAddress.setText(response.body().getCustomer().getAddress());
                         break;
                     case 3:
+                        etUsername.setText(response.body().getDoctor().getUsername());
+                        etFullname.setText(response.body().getDoctor().getFullname());
                         break;
                 }
             }
@@ -177,7 +182,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             fullname = etFullname.getText().toString().trim();
             phone = etPhone.getText().toString().trim();
             address = etAddress.getText().toString().trim();
-            password = etPassword.getText().toString().trim();
+            String password = etPassword.getText().toString().trim();
             password_confirmation = etPasswordConfirmation.getText().toString().trim();
 
             if (role_id == 2) {
@@ -189,6 +194,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     Snackbar.make(parentView, R.string.empty_phone, Snackbar.LENGTH_SHORT).show();
                 } else if (address.isEmpty()) {
                     Snackbar.make(parentView, R.string.empty_address, Snackbar.LENGTH_SHORT).show();
+                }
+            } else if (role_id == 3) {
+                if (username.isEmpty()) {
+                    Snackbar.make(parentView, R.string.empty_username, Snackbar.LENGTH_SHORT).show();
+                } else if (fullname.isEmpty()) {
+                    Snackbar.make(parentView, R.string.empty_fullname, Snackbar.LENGTH_SHORT).show();
                 }
             }
 
@@ -214,6 +225,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 startActivity(new Intent(this, CustomerActivity.class));
                 break;
             case 3:
+                startActivity(new Intent(this, DoctorActivity.class));
                 break;
         }
 

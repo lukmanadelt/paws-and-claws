@@ -21,7 +21,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Update Customer Activity
+ * Customer Update Activity
  * Created by @lukmanadelt on 11/12/2017.
  */
 

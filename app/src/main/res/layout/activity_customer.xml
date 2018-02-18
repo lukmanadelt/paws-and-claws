@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fab="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parentLayout"
     android:layout_width="match_parent"
@@ -19,13 +18,14 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/ivLogo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:contentDescription="@string/app_name"
                 android:gravity="center"
                 android:src="@drawable/logo_original" />
 
@@ -37,7 +37,7 @@
                 android:layout_centerHorizontal="true"
                 android:text="@string/greeting_fullname"
                 android:textColor="@color/colorGray"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvRole"
@@ -47,12 +47,12 @@
                 android:layout_centerHorizontal="true"
                 android:text="@string/greeting_role"
                 android:textColor="@color/colorGray"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvPet"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="160dp"
                 android:layout_below="@+id/tvRole"
                 android:layout_marginTop="16dp" />
 
@@ -66,14 +66,14 @@
                 android:gravity="center"
                 android:text="@string/empty_pet"
                 android:textColor="@color/colorGray"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:visibility="gone" />
         </RelativeLayout>
     </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabInsert"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:src="@android:drawable/ic_input_add"

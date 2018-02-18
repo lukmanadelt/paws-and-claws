@@ -30,7 +30,7 @@
             android:layout_below="@+id/tvUsername"
             android:inputType="text|textPersonName"
             android:maxLines="1"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorGray"
             android:visibility="gone" />
 
         <TextView
@@ -50,7 +50,7 @@
             android:layout_below="@+id/tvFullname"
             android:inputType="text|textPersonName"
             android:maxLines="1"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorGray"
             android:visibility="gone" />
 
         <TextView
@@ -68,9 +68,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvPhone"
-            android:inputType="numberDecimal"
+            android:inputType="phone"
             android:maxLines="1"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorGray"
             android:visibility="gone" />
 
         <TextView
@@ -90,7 +90,7 @@
             android:layout_below="@+id/tvAddress"
             android:inputType="text"
             android:maxLines="1"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorGray"
             android:visibility="gone" />
 
         <TextView
@@ -109,7 +109,7 @@
             android:layout_below="@+id/tvPassword"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorGray" />
 
         <TextView
             android:id="@+id/tvPasswordConfirmation"
@@ -128,7 +128,7 @@
             android:layout_marginBottom="16dp"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorGray" />
 
         <Button
             android:id="@+id/bUpdate"

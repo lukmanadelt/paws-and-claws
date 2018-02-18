@@ -14,5 +14,5 @@
         android:icon="@drawable/logout"
         android:orderInCategory="101"
         android:title="@string/logout"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 </menu>

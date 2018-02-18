@@ -21,9 +21,6 @@ import mobile.skripsi.pawsandclaws.helper.SharedPreferencesManager;
  */
 
 public class AdministratorActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextView tvFullname, tvRole;
-    private Button bDoctor, bCustomer, bReport;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Create Layout
@@ -37,11 +34,11 @@ public class AdministratorActivity extends AppCompatActivity implements View.OnC
         }
 
         // Initial Component
-        tvFullname = findViewById(R.id.tvFullname);
-        tvRole = findViewById(R.id.tvRole);
-        bDoctor = findViewById(R.id.bDoctor);
-        bCustomer = findViewById(R.id.bCustomer);
-        bReport = findViewById(R.id.bReport);
+        TextView tvFullname = findViewById(R.id.tvFullname);
+        TextView tvRole = findViewById(R.id.tvRole);
+        Button bDoctor = findViewById(R.id.bDoctor);
+        Button bCustomer = findViewById(R.id.bCustomer);
+        Button bReport = findViewById(R.id.bReport);
 
         // Set component to listen click event
         bDoctor.setOnClickListener(this);

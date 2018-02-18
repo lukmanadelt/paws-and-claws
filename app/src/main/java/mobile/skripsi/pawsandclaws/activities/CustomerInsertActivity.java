@@ -20,7 +20,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Insert Customer Activity
+ * Customer Insert Activity
  * Created by @lukmanadelt on 11/10/2017.
  */
 
@@ -101,7 +101,7 @@ public class CustomerInsertActivity extends AppCompatActivity implements View.On
                 Snackbar.make(parentView, R.string.empty_username, Snackbar.LENGTH_SHORT).show();
             } else if (password.isEmpty()) {
                 Snackbar.make(parentView, R.string.empty_password, Snackbar.LENGTH_SHORT).show();
-            }else if (fullname.isEmpty()) {
+            } else if (fullname.isEmpty()) {
                 Snackbar.make(parentView, R.string.empty_fullname, Snackbar.LENGTH_SHORT).show();
             } else if (phone.isEmpty()) {
                 Snackbar.make(parentView, R.string.empty_phone, Snackbar.LENGTH_SHORT).show();

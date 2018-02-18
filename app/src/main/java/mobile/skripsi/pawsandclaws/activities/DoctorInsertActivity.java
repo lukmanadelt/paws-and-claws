@@ -20,7 +20,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Insert Doctor Activity
+ * Doctor Insert Activity
  * Created by @lukmanadelt on 11/9/2017.
  */
 
@@ -97,7 +97,7 @@ public class DoctorInsertActivity extends AppCompatActivity implements View.OnCl
                 Snackbar.make(parentView, R.string.empty_username, Snackbar.LENGTH_SHORT).show();
             } else if (password.isEmpty()) {
                 Snackbar.make(parentView, R.string.empty_password, Snackbar.LENGTH_SHORT).show();
-            }else if (fullname.isEmpty()) {
+            } else if (fullname.isEmpty()) {
                 Snackbar.make(parentView, R.string.empty_fullname, Snackbar.LENGTH_SHORT).show();
             } else {
                 insertDoctor();

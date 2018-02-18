@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,13 +11,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/ivLogo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            android:contentDescription="@string/app_name"
             android:gravity="center"
             android:src="@drawable/logo_original" />
 
@@ -30,7 +30,7 @@
             android:layout_centerHorizontal="true"
             android:text="@string/greeting_fullname"
             android:textColor="@color/colorGray"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tvRole"
@@ -40,7 +40,7 @@
             android:layout_centerHorizontal="true"
             android:text="@string/greeting_role"
             android:textColor="@color/colorGray"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/bDoctor"
@@ -50,7 +50,7 @@
             android:layout_marginBottom="16dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/image_button"
-            android:drawableLeft="@drawable/doctor"
+            android:drawableStart="@drawable/doctor"
             android:paddingBottom="5dp"
             android:paddingLeft="32dp"
             android:paddingRight="32dp"
@@ -65,7 +65,7 @@
             android:layout_below="@+id/bDoctor"
             android:layout_marginBottom="16dp"
             android:background="@drawable/image_button"
-            android:drawableLeft="@drawable/customer"
+            android:drawableStart="@drawable/customer"
             android:paddingBottom="5dp"
             android:paddingLeft="32dp"
             android:paddingRight="32dp"
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/bCustomer"
             android:background="@drawable/image_button"
-            android:drawableLeft="@drawable/report"
+            android:drawableStart="@drawable/report"
             android:paddingBottom="5dp"
             android:paddingLeft="32dp"
             android:paddingRight="32dp"

@@ -20,6 +20,7 @@ public class SharedPreferencesManager {
     private static final String KEY_ROLE_ID = "key_role_id";
     private static final String KEY_USERNAME = "key_username";
     private static final String KEY_FULLNAME = "key_fullname";
+    private static final String KEY_COUNT_PETS = "key_count_pets";
 
     private SharedPreferencesManager(Context context) {
         mContext = context;
@@ -32,24 +33,21 @@ public class SharedPreferencesManager {
         return mInstance;
     }
 
-    public boolean login(User user) {
+    public void login(User user) {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(KEY_ID, user.getId());
         editor.putInt(KEY_ROLE_ID, user.getRoleId());
         editor.putString(KEY_USERNAME, user.getUsername());
         editor.putString(KEY_FULLNAME, user.getFullname());
+        editor.putInt(KEY_COUNT_PETS, user.getCountPets());
         editor.apply();
-        return true;
     }
 
     public boolean isLoggedIn() {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
 
-        if (sharedPreferences.getString(KEY_USERNAME, null) != null)
-            return true;
-
-        return false;
+        return sharedPreferences.getString(KEY_USERNAME, null) != null;
     }
 
     public User getUser() {
@@ -58,15 +56,15 @@ public class SharedPreferencesManager {
                 sharedPreferences.getInt(KEY_ID, 0),
                 sharedPreferences.getInt(KEY_ROLE_ID, 0),
                 sharedPreferences.getString(KEY_USERNAME, null),
-                sharedPreferences.getString(KEY_FULLNAME, null)
+                sharedPreferences.getString(KEY_FULLNAME, null),
+                sharedPreferences.getInt(KEY_COUNT_PETS, 0)
         );
     }
 
-    public boolean logout() {
+    public void logout() {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        return true;
     }
 }

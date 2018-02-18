@@ -1,9 +1,11 @@
 package mobile.skripsi.pawsandclaws.activities;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -12,18 +14,12 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.joda.time.DateTime;
-import org.joda.time.Period;
-
-import java.io.IOException;
 import java.util.Calendar;
 
 import mobile.skripsi.pawsandclaws.R;
 import mobile.skripsi.pawsandclaws.api.APIService;
 import mobile.skripsi.pawsandclaws.api.APIUrl;
 import mobile.skripsi.pawsandclaws.model.Result;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,16 +28,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Pet Detail Activity
- * Created by Sleekr on 11/29/2017.
+ * Created by @lukmanadelt on 11/29/2017.
  */
 
 public class PetDetailActivity extends AppCompatActivity implements View.OnClickListener {
     private View parentView;
     private ImageView ivPhoto;
     private TextView tvPetType, tvPetName, tvSex, tvDOB, tvAge, tvBreed, tvColor;
-    private Button bUpdate, bDelete;
     private int id;
-    private String photo;
+    private String pet_name, photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,14 +54,14 @@ public class PetDetailActivity extends AppCompatActivity implements View.OnClick
         tvAge = findViewById(R.id.tvAge);
         tvBreed = findViewById(R.id.tvBreed);
         tvColor = findViewById(R.id.tvColor);
-        bUpdate = findViewById(R.id.bUpdate);
-        bDelete = findViewById(R.id.bDelete);
+        Button bUpdate = findViewById(R.id.bUpdate);
+        Button bDelete = findViewById(R.id.bDelete);
 
         // Set component to listen click event
         bUpdate.setOnClickListener(this);
         bDelete.setOnClickListener(this);
 
-        // Initial doctor id from previous activity
+        // Initial pet id from previous activity
         id = getIntent().getIntExtra("pet_id", 0);
 
         // Getting a pet
@@ -114,7 +109,9 @@ public class PetDetailActivity extends AppCompatActivity implements View.OnClick
                         break;
                 }
 
-                tvPetName.setText(response.body().getPet().getName());
+                pet_name = response.body().getPet().getName();
+
+                tvPetName.setText(pet_name);
                 tvDOB.setText(response.body().getPet().getDOB());
                 tvBreed.setText(response.body().getPet().getBreed());
                 tvColor.setText(response.body().getPet().getColor());
@@ -122,9 +119,9 @@ public class PetDetailActivity extends AppCompatActivity implements View.OnClick
                 photo = response.body().getPet().getPhoto();
 
                 String[] dob = response.body().getPet().getDOB().split("-");
-                getAge(Integer.parseInt(dob[0]), Integer.parseInt(dob[1]), Integer.parseInt(dob[2]));
+                getAge(Integer.parseInt(dob[0]), Integer.parseInt(dob[1]) - 1, Integer.parseInt(dob[2]));
 
-                if (!photo.isEmpty()) {
+                if (photo != null) {
                     ivPhoto.setVisibility(View.VISIBLE);
                     Picasso.with(getApplicationContext()).load(APIUrl.BASE_URL + "uploads/" + photo).into(ivPhoto);
                 }
@@ -142,13 +139,28 @@ public class PetDetailActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bUpdate:
-                Intent updateCustomer = new Intent(getApplicationContext(), CustomerUpdateActivity.class);
+                Intent updatePet = new Intent(getApplicationContext(), PetUpdateActivity.class);
 
-                updateCustomer.putExtra("customer_id", id);
-                startActivity(updateCustomer);
+                updatePet.putExtra("pet_id", id);
+                startActivity(updatePet);
                 finish();
                 break;
             case R.id.bDelete:
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.delete)
+                        .setMessage(getString(R.string.message_delete, pet_name))
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                deletePet();
+                            }
+                        })
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
                 break;
         }
     }
@@ -159,18 +171,56 @@ public class PetDetailActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void getAge(int year, int month, int day) {
-        Calendar cDOB = Calendar.getInstance();
-        Calendar cToday = Calendar.getInstance();
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
 
-        cDOB.set(year, month, day);
-        cToday.set(cToday.get(Calendar.YEAR), cToday.get(Calendar.MONTH) + 1, cToday.get(Calendar.DAY_OF_MONTH));
+        dob.set(Calendar.YEAR, year);
+        dob.set(Calendar.MONTH, month);
+        dob.set(Calendar.DATE, day);
+        dob.setFirstDayOfWeek(dob.get(Calendar.DAY_OF_WEEK));
+        today.setFirstDayOfWeek(dob.get(Calendar.DAY_OF_WEEK));
 
-        DateTime dtDOB = new DateTime(cDOB.getTime());
-        DateTime dtToday = new DateTime(cToday.getTime());
+        int age = today.get(Calendar.WEEK_OF_YEAR) - dob.get(Calendar.WEEK_OF_YEAR);
 
-        Period period = new Period(dtDOB, dtToday);
-        Integer age = new Integer(period.getWeeks());
+        tvAge.setText(String.valueOf(age));
+    }
 
-        tvAge.setText(age.toString());
+    /**
+     * Method to deleting a pet
+     */
+    private void deletePet() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Menghapus...");
+        progressDialog.show();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(APIUrl.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        APIService service = retrofit.create(APIService.class);
+
+        Call<Result> call = service.deletePet(id);
+
+        call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                progressDialog.dismiss();
+
+                if (response.body().getSuccess()) {
+                    startActivity(new Intent(PetDetailActivity.this, CustomerActivity.class));
+                    onBackPressed();
+                }
+
+                Snackbar.make(parentView, response.body().getMessage(), Snackbar.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                progressDialog.dismiss();
+                Snackbar.make(parentView, t.getMessage(), Snackbar.LENGTH_SHORT).show();
+            }
+        });
     }
 }

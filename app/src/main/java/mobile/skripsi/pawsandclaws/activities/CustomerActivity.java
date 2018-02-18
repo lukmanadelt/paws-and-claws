@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import mobile.skripsi.pawsandclaws.R;
@@ -23,7 +22,6 @@ import mobile.skripsi.pawsandclaws.api.APIUrl;
 import mobile.skripsi.pawsandclaws.helper.PetAdapter;
 import mobile.skripsi.pawsandclaws.helper.SharedPreferencesManager;
 import mobile.skripsi.pawsandclaws.model.Pets;
-import mobile.skripsi.pawsandclaws.model.Result;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,11 +35,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CustomerActivity extends AppCompatActivity implements View.OnClickListener {
     private View parentView;
-    private TextView tvFullname, tvRole;
+    private TextView tvEmptyPet;
     private FloatingActionButton fabInsert;
     private RecyclerView rvPet;
     private RecyclerView.Adapter rvAdapter;
-    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +54,9 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
 
         // Initial Component
         parentView = findViewById(R.id.parentLayout);
-        tvFullname = findViewById(R.id.tvFullname);
-        tvRole = findViewById(R.id.tvRole);
+        TextView tvFullname = findViewById(R.id.tvFullname);
+        TextView tvRole = findViewById(R.id.tvRole);
+        tvEmptyPet = findViewById(R.id.tvEmptyPet);
         fabInsert = findViewById(R.id.fabInsert);
         rvPet = findViewById(R.id.rvPet);
         rvPet.setHasFixedSize(true);
@@ -73,7 +71,7 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
         tvRole.append(" Pelanggan");
 
         // Initial customer id
-        id = SharedPreferencesManager.getInstance(getApplicationContext()).getUser().getId();
+        int id = SharedPreferencesManager.getInstance(getApplicationContext()).getUser().getId();
 
         getPets(id);
     }
@@ -97,6 +95,7 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.notification:
+                startActivity(new Intent(this, NotificationActivity.class));
                 return true;
             case R.id.profile:
                 Intent profile = new Intent(this, ProfileActivity.class);
@@ -136,7 +135,7 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
     /**
      * Method to getting customer pets
      */
-    private void getPets(int id) {
+    public void getPets(int id) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Memuat...");
@@ -156,8 +155,15 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
             public void onResponse(Call<Pets> call, Response<Pets> response) {
                 progressDialog.dismiss();
 
-                rvAdapter = new PetAdapter(response.body().getPets(), getApplicationContext());
-                rvPet.setAdapter(rvAdapter);
+                if (response.body().getPets().size() > 0) {
+                    rvPet.setVisibility(View.VISIBLE);
+                    tvEmptyPet.setVisibility(View.GONE);
+                    rvAdapter = new PetAdapter(response.body().getPets(), getApplicationContext());
+                    rvPet.setAdapter(rvAdapter);
+                } else {
+                    rvPet.setVisibility(View.GONE);
+                    tvEmptyPet.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
